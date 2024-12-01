@@ -1,0 +1,53 @@
+syntax = "proto3";
+
+package message;
+
+message Message{
+    uint64 id = 1;
+    uint64 user_id = 2;
+    uint64 chat_id = 3;
+    string message = 4;
+    MessageUser user = 5;
+
+};
+
+message CreateMessageRequest{
+    uint64 chat_id = 1;
+    string message = 2;
+    uint64 user_id = 3;
+    string token = 4;
+};
+
+
+message  CreateMessageResponse{
+    Message message = 1;
+};
+
+
+message GetMessagesResponse{
+    repeated Message message = 1;
+};
+
+message GetMessagesRequest{
+    uint64 chat_id = 1;
+    uint64 user_id = 2;
+};
+
+
+message MessageUser{
+    
+    uint64 id = 1;
+    string username = 2;
+    string profile_picture = 3;
+    string name = 4;
+    string surname = 5;
+}
+
+
+service MessageService{
+
+    rpc CreateMessage(CreateMessageRequest) returns (CreateMessageResponse);
+    rpc GetMessages(GetMessagesRequest) returns (GetMessagesResponse);
+    
+}
+

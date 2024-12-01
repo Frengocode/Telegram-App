@@ -1,0 +1,83 @@
+syntax = "proto3";
+package user;
+
+
+
+message User{
+
+    uint64 id = 1;
+    string username = 2;
+    string profile_picture = 3;
+    string name = 5;
+    string surname = 6;
+    uint64 age = 7;
+    string email = 8;
+
+};
+
+
+message CreateUserRequest{
+
+    string username = 1;
+    string password = 2;
+    string name = 3;
+    string email = 4;
+
+};
+
+
+message CreateUserResponse{
+
+    User user =  1;
+
+};
+
+message GetUserByUsernamePasswordRequest{
+
+    string username = 1;
+    string password = 2;
+
+};
+
+message GetUserByUsernamePasswordResponse{
+
+    User user = 1;
+};
+
+
+
+message GetUserResponse{
+
+    uint64 id = 1;
+    string username = 2;
+    string profile_picture = 3;
+    string name = 5;
+    string surname = 6;
+    uint64 age = 7;
+    string email = 8;
+
+};
+
+message GetUserRequest{
+    
+    string username = 1;
+};
+
+message GetUserByIdRequest{
+  
+    uint64 id = 1;
+
+};
+
+message GetUserByIdResponse{
+    User user = 1;
+}
+
+service UserService{
+    rpc CreateUser(CreateUserRequest) returns (CreateUserResponse);
+    rpc GetUserByUsernamePassword(GetUserByUsernamePasswordRequest) returns (GetUserByUsernamePasswordResponse);
+    rpc GetUser(GetUserRequest) returns (GetUserResponse);
+    rpc GetUserByID(GetUserByIdRequest) returns (GetUserByIdResponse);
+
+
+}

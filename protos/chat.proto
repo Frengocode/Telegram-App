@@ -1,0 +1,77 @@
+syntax = "proto3";
+
+
+package chat;
+
+
+message Chat{
+    uint32 id = 1;
+    uint64 chat_author_id = 2;
+    uint32 chat_member_id = 3;
+    ChatUser chat_author = 4;
+    ChatUser chat_member = 5;
+};
+
+
+message CreateChatRequest{
+    uint64 member_id = 1;
+    uint64 author_id = 2; 
+
+};
+
+message ChatUser{
+    
+    uint64 id = 1;
+    string username = 2;
+    string profile_picture = 3;
+    string name = 5;
+    string surname = 6;
+    uint64 age = 7;
+    string email = 8;
+
+
+};
+
+
+message CreateChatResponse{
+    Chat chat = 1;
+}
+
+message GetUserChatsResponse{
+    repeated Chat chat = 1;
+};
+
+message GetUserChatsRequest{
+    uint64 author_id = 1;
+};
+
+message GetUserChatResponse{
+    Chat chat = 1;
+
+};
+
+
+message GetUserChatRequest{
+    uint64 author_id = 1;
+    uint64 id = 2;
+};
+
+
+message DeleteChatRequest{
+    uint64 id = 1;
+    uint64 author_id = 2;
+};
+
+
+message DeleteChatResponse{
+    string message = 1;
+};
+
+
+service ChatService{
+    rpc CreateChat(CreateChatRequest) returns (CreateChatResponse);
+    rpc GetUserChats(GetUserChatsRequest) returns (GetUserChatsResponse);
+    rpc GetUserChat(GetUserChatRequest) returns (GetUserChatResponse);
+    rpc DeleteChat(DeleteChatRequest) returns (DeleteChatResponse);
+
+};
