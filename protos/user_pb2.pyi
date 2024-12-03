@@ -1,3 +1,4 @@
+from google.protobuf import empty_pb2 as _empty_pb2
 from google.protobuf import descriptor as _descriptor
 from google.protobuf import message as _message
 from typing import ClassVar as _ClassVar, Mapping as _Mapping, Optional as _Optional, Union as _Union
@@ -89,3 +90,31 @@ class GetUserByIdResponse(_message.Message):
     USER_FIELD_NUMBER: _ClassVar[int]
     user: User
     def __init__(self, user: _Optional[_Union[User, _Mapping]] = ...) -> None: ...
+
+class UpdateProfileRequest(_message.Message):
+    __slots__ = ("username", "name", "surname", "email", "user_id")
+    USERNAME_FIELD_NUMBER: _ClassVar[int]
+    NAME_FIELD_NUMBER: _ClassVar[int]
+    SURNAME_FIELD_NUMBER: _ClassVar[int]
+    EMAIL_FIELD_NUMBER: _ClassVar[int]
+    USER_ID_FIELD_NUMBER: _ClassVar[int]
+    username: str
+    name: str
+    surname: str
+    email: str
+    user_id: int
+    def __init__(self, username: _Optional[str] = ..., name: _Optional[str] = ..., surname: _Optional[str] = ..., email: _Optional[str] = ..., user_id: _Optional[int] = ...) -> None: ...
+
+class UpdateProfilePictureResponse(_message.Message):
+    __slots__ = ("profile_picture",)
+    PROFILE_PICTURE_FIELD_NUMBER: _ClassVar[int]
+    profile_picture: str
+    def __init__(self, profile_picture: _Optional[str] = ...) -> None: ...
+
+class UpdateProfilePictureRequest(_message.Message):
+    __slots__ = ("profile_picture", "user_id")
+    PROFILE_PICTURE_FIELD_NUMBER: _ClassVar[int]
+    USER_ID_FIELD_NUMBER: _ClassVar[int]
+    profile_picture: bytes
+    user_id: int
+    def __init__(self, profile_picture: _Optional[bytes] = ..., user_id: _Optional[int] = ...) -> None: ...

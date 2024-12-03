@@ -6,3 +6,10 @@ class CreateUserSceheme(BaseModel):
     password: str
     email: str
     name: str
+
+
+class UpdateProfileRequestScheme(BaseModel):
+    username: str
+    name: str
+    email: str
+    surname: str

@@ -3,6 +3,7 @@
 import grpc
 import warnings
 
+from google.protobuf import empty_pb2 as google_dot_protobuf_dot_empty__pb2
 from protos import user_pb2 as protos_dot_user__pb2
 
 GRPC_GENERATED_VERSION = '1.68.0'
@@ -54,6 +55,16 @@ class UserServiceStub(object):
                 request_serializer=protos_dot_user__pb2.GetUserByIdRequest.SerializeToString,
                 response_deserializer=protos_dot_user__pb2.GetUserByIdResponse.FromString,
                 _registered_method=True)
+        self.UpdateProfile = channel.unary_unary(
+                '/user.UserService/UpdateProfile',
+                request_serializer=protos_dot_user__pb2.UpdateProfileRequest.SerializeToString,
+                response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+                _registered_method=True)
+        self.UpdateProfilePicture = channel.unary_unary(
+                '/user.UserService/UpdateProfilePicture',
+                request_serializer=protos_dot_user__pb2.UpdateProfilePictureRequest.SerializeToString,
+                response_deserializer=protos_dot_user__pb2.UpdateProfilePictureResponse.FromString,
+                _registered_method=True)
 
 
 class UserServiceServicer(object):
@@ -83,6 +94,18 @@ class UserServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def UpdateProfile(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def UpdateProfilePicture(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_UserServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -105,6 +128,16 @@ def add_UserServiceServicer_to_server(servicer, server):
                     servicer.GetUserByID,
                     request_deserializer=protos_dot_user__pb2.GetUserByIdRequest.FromString,
                     response_serializer=protos_dot_user__pb2.GetUserByIdResponse.SerializeToString,
+            ),
+            'UpdateProfile': grpc.unary_unary_rpc_method_handler(
+                    servicer.UpdateProfile,
+                    request_deserializer=protos_dot_user__pb2.UpdateProfileRequest.FromString,
+                    response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+            ),
+            'UpdateProfilePicture': grpc.unary_unary_rpc_method_handler(
+                    servicer.UpdateProfilePicture,
+                    request_deserializer=protos_dot_user__pb2.UpdateProfilePictureRequest.FromString,
+                    response_serializer=protos_dot_user__pb2.UpdateProfilePictureResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -215,6 +248,60 @@ class UserService(object):
             '/user.UserService/GetUserByID',
             protos_dot_user__pb2.GetUserByIdRequest.SerializeToString,
             protos_dot_user__pb2.GetUserByIdResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def UpdateProfile(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/user.UserService/UpdateProfile',
+            protos_dot_user__pb2.UpdateProfileRequest.SerializeToString,
+            google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def UpdateProfilePicture(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/user.UserService/UpdateProfilePicture',
+            protos_dot_user__pb2.UpdateProfilePictureRequest.SerializeToString,
+            protos_dot_user__pb2.UpdateProfilePictureResponse.FromString,
             options,
             channel_credentials,
             insecure,

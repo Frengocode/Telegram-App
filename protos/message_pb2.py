@@ -22,27 +22,32 @@ _runtime_version.ValidateProtobufRuntimeVersion(
 _sym_db = _symbol_database.Default()
 
 
+from google.protobuf import empty_pb2 as google_dot_protobuf_dot_empty__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x14protos/message.proto\x12\x07message\"l\n\x07Message\x12\n\n\x02id\x18\x01 \x01(\x04\x12\x0f\n\x07user_id\x18\x02 \x01(\x04\x12\x0f\n\x07\x63hat_id\x18\x03 \x01(\x04\x12\x0f\n\x07message\x18\x04 \x01(\t\x12\"\n\x04user\x18\x05 \x01(\x0b\x32\x14.message.MessageUser\"\x91\x01\n\x14\x43reateMessageRequest\x12\x0f\n\x07\x63hat_id\x18\x01 \x01(\x04\x12\x0f\n\x07message\x18\x02 \x01(\t\x12\x0f\n\x07user_id\x18\x03 \x01(\x04\x12\r\n\x05token\x18\x04 \x01(\t\x12\x10\n\x08username\x18\x05 \x01(\t\x12\x17\n\x0fprofile_picture\x18\x06 \x01(\t\x12\x0c\n\x04name\x18\x07 \x01(\t\":\n\x15\x43reateMessageResponse\x12!\n\x07message\x18\x01 \x01(\x0b\x32\x10.message.Message\"8\n\x13GetMessagesResponse\x12!\n\x07message\x18\x01 \x03(\x0b\x32\x10.message.Message\"E\n\x12GetMessagesRequest\x12\x0f\n\x07\x63hat_id\x18\x01 \x01(\x04\x12\x0f\n\x07user_id\x18\x02 \x01(\x04\x12\r\n\x05token\x18\x03 \x01(\t\"c\n\x0bMessageUser\x12\n\n\x02id\x18\x01 \x01(\x04\x12\x10\n\x08username\x18\x02 \x01(\t\x12\x17\n\x0fprofile_picture\x18\x03 \x01(\t\x12\x0c\n\x04name\x18\x04 \x01(\t\x12\x0f\n\x07surname\x18\x05 \x01(\t2\xaa\x01\n\x0eMessageService\x12N\n\rCreateMessage\x12\x1d.message.CreateMessageRequest\x1a\x1e.message.CreateMessageResponse\x12H\n\x0bGetMessages\x12\x1b.message.GetMessagesRequest\x1a\x1c.message.GetMessagesResponseb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x14protos/message.proto\x12\x07message\x1a\x1bgoogle/protobuf/empty.proto\"l\n\x07Message\x12\n\n\x02id\x18\x01 \x01(\x04\x12\x0f\n\x07user_id\x18\x02 \x01(\x04\x12\x0f\n\x07\x63hat_id\x18\x03 \x01(\x04\x12\x0f\n\x07message\x18\x04 \x01(\t\x12\"\n\x04user\x18\x05 \x01(\x0b\x32\x14.message.MessageUser\"\x91\x01\n\x14\x43reateMessageRequest\x12\x0f\n\x07\x63hat_id\x18\x01 \x01(\x04\x12\x0f\n\x07message\x18\x02 \x01(\t\x12\x0f\n\x07user_id\x18\x03 \x01(\x04\x12\r\n\x05token\x18\x04 \x01(\t\x12\x10\n\x08username\x18\x05 \x01(\t\x12\x17\n\x0fprofile_picture\x18\x06 \x01(\t\x12\x0c\n\x04name\x18\x07 \x01(\t\":\n\x15\x43reateMessageResponse\x12!\n\x07message\x18\x01 \x01(\x0b\x32\x10.message.Message\"8\n\x13GetMessagesResponse\x12!\n\x07message\x18\x01 \x03(\x0b\x32\x10.message.Message\"E\n\x12GetMessagesRequest\x12\x0f\n\x07\x63hat_id\x18\x01 \x01(\x04\x12\x0f\n\x07user_id\x18\x02 \x01(\x04\x12\r\n\x05token\x18\x03 \x01(\t\"c\n\x0bMessageUser\x12\n\n\x02id\x18\x01 \x01(\x04\x12\x10\n\x08username\x18\x02 \x01(\t\x12\x17\n\x0fprofile_picture\x18\x03 \x01(\t\x12\x0c\n\x04name\x18\x04 \x01(\t\x12\x0f\n\x07surname\x18\x05 \x01(\t\"3\n\x14\x44\x65leteMessageRequest\x12\n\n\x02id\x18\x01 \x01(\x04\x12\x0f\n\x07user_id\x18\x02 \x01(\x04\"D\n\x14UpdateMessageRequest\x12\x0f\n\x07message\x18\x01 \x01(\t\x12\x0f\n\x07user_id\x18\x02 \x01(\x04\x12\n\n\x02id\x18\x03 \x01(\r2\xba\x02\n\x0eMessageService\x12N\n\rCreateMessage\x12\x1d.message.CreateMessageRequest\x1a\x1e.message.CreateMessageResponse\x12H\n\x0bGetMessages\x12\x1b.message.GetMessagesRequest\x1a\x1c.message.GetMessagesResponse\x12\x46\n\rDeleteMessage\x12\x1d.message.DeleteMessageRequest\x1a\x16.google.protobuf.Empty\x12\x46\n\rUpdateMessage\x12\x1d.message.UpdateMessageRequest\x1a\x16.google.protobuf.Emptyb\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'protos.message_pb2', _globals)
 if not _descriptor._USE_C_DESCRIPTORS:
   DESCRIPTOR._loaded_options = None
-  _globals['_MESSAGE']._serialized_start=33
-  _globals['_MESSAGE']._serialized_end=141
-  _globals['_CREATEMESSAGEREQUEST']._serialized_start=144
-  _globals['_CREATEMESSAGEREQUEST']._serialized_end=289
-  _globals['_CREATEMESSAGERESPONSE']._serialized_start=291
-  _globals['_CREATEMESSAGERESPONSE']._serialized_end=349
-  _globals['_GETMESSAGESRESPONSE']._serialized_start=351
-  _globals['_GETMESSAGESRESPONSE']._serialized_end=407
-  _globals['_GETMESSAGESREQUEST']._serialized_start=409
-  _globals['_GETMESSAGESREQUEST']._serialized_end=478
-  _globals['_MESSAGEUSER']._serialized_start=480
-  _globals['_MESSAGEUSER']._serialized_end=579
-  _globals['_MESSAGESERVICE']._serialized_start=582
-  _globals['_MESSAGESERVICE']._serialized_end=752
+  _globals['_MESSAGE']._serialized_start=62
+  _globals['_MESSAGE']._serialized_end=170
+  _globals['_CREATEMESSAGEREQUEST']._serialized_start=173
+  _globals['_CREATEMESSAGEREQUEST']._serialized_end=318
+  _globals['_CREATEMESSAGERESPONSE']._serialized_start=320
+  _globals['_CREATEMESSAGERESPONSE']._serialized_end=378
+  _globals['_GETMESSAGESRESPONSE']._serialized_start=380
+  _globals['_GETMESSAGESRESPONSE']._serialized_end=436
+  _globals['_GETMESSAGESREQUEST']._serialized_start=438
+  _globals['_GETMESSAGESREQUEST']._serialized_end=507
+  _globals['_MESSAGEUSER']._serialized_start=509
+  _globals['_MESSAGEUSER']._serialized_end=608
+  _globals['_DELETEMESSAGEREQUEST']._serialized_start=610
+  _globals['_DELETEMESSAGEREQUEST']._serialized_end=661
+  _globals['_UPDATEMESSAGEREQUEST']._serialized_start=663
+  _globals['_UPDATEMESSAGEREQUEST']._serialized_end=731
+  _globals['_MESSAGESERVICE']._serialized_start=734
+  _globals['_MESSAGESERVICE']._serialized_end=1048
 # @@protoc_insertion_point(module_scope)

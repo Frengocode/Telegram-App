@@ -14,7 +14,6 @@ import asyncio
 import json
 
 
-
 class ConnectionManager:
     def __init__(self):
         self.active_connections: dict[int, list[WebSocket]] = {}
@@ -24,8 +23,6 @@ class ConnectionManager:
         if chat_id not in self.active_connections:
             self.active_connections[chat_id] = []
         self.active_connections[chat_id].append(websocket)
-
-
 
     def disconnect(self, websocket: WebSocket, chat_id: int):
         if chat_id in self.active_connections:
@@ -39,8 +36,7 @@ class ConnectionManager:
                 message["timestamp"] = message["timestamp"].isoformat()
 
             for connection in self.active_connections[chat_id]:
-                    await connection.send_json(message)
-
+                await connection.send_json(message)
 
 
 manager = ConnectionManager()
@@ -61,12 +57,13 @@ async def websocket_endpoint(websocket: WebSocket, chat_id: int):
                 message_data["timestamp"] = message_data["timestamp"].isoformat()
 
             message_data["user"] = message_data.get("user", "Unknown")
-            message_data["profile_photo"] = message_data.get("user.profile_picture", None)
+            message_data["profile_photo"] = message_data.get(
+                "user.profile_picture", None
+            )
 
             await manager.broadcast(chat_id, message_data)
     except WebSocketDisconnect:
         manager.disconnect(websocket, chat_id)
-
 
 
 class MessgaeService(message_pb2_grpc.MessageServiceServicer):
@@ -74,42 +71,44 @@ class MessgaeService(message_pb2_grpc.MessageServiceServicer):
         self.session = session
 
     async def CreateMessage(self, request, context):
-        
-        chat = await self._get_data_from_url(f"http://localhost:8000/chat-service/api/v1/get-user-chat/{request.chat_id}/", accses_token=request.token)
+
+        chat = await self._get_data_from_url(
+            f"http://localhost:8000/chat-service/api/v1/get-user-chat/{request.chat_id}/",
+            accses_token=request.token,
+        )
         if chat is None:
             log.info("Chat Not Found")
             return Empty()
-        
+
         message = MessageModel(
-            message = request.message,
-            chat_id = request.chat_id,
-            user_id = request.user_id
+            message=request.message, chat_id=request.chat_id, user_id=request.user_id
         )
 
         self.session.add(message)
         await self.session.commit()
 
         return message_pb2.Message(
-                message=request.message,
-                user_id=request.user_id,
-                chat_id=request.chat_id,
-                user=message_pb2.MessageUser(
-                    id=request.user_id,
-                    username=request.username,
-                    profile_picture=request.profile_picture,
-                    name=request.name
-                )
-                
-            )
-        
+            message=request.message,
+            user_id=request.user_id,
+            chat_id=request.chat_id,
+            user=message_pb2.MessageUser(
+                id=request.user_id,
+                username=request.username,
+                profile_picture=request.profile_picture,
+                name=request.name,
+            ),
+        )
 
-    
     async def GetMessages(self, request, context):
         messages = (
-            await self.session.execute(
-                select(MessageModel).filter_by(chat_id=request.chat_id)
+            (
+                await self.session.execute(
+                    select(MessageModel).filter_by(chat_id=request.chat_id)
+                )
             )
-        ).scalars().all()
+            .scalars()
+            .all()
+        )
 
         if not messages:
             return message_pb2.GetMessagesResponse(messages=[])
@@ -119,7 +118,7 @@ class MessgaeService(message_pb2_grpc.MessageServiceServicer):
             try:
                 user_data = await self._get_data_from_url(
                     f"http://localhost:8000/user-service/api/v1/get-user-by-id/{message.user_id}/",
-                    accses_token=request.token
+                    accses_token=request.token,
                 )
                 if user_data and "user" in user_data:
                     user_data_map[message.user_id] = user_data["user"]
@@ -135,27 +134,75 @@ class MessgaeService(message_pb2_grpc.MessageServiceServicer):
                 user=message_pb2.MessageUser(
                     id=int(user_data_map.get(message.user_id, {}).get("id", 0)),
                     username=user_data_map.get(message.user_id, {}).get("username", ""),
-                    profile_picture=user_data_map.get(message.user_id, {}).get("profile_picture", ""),
+                    profile_picture=user_data_map.get(message.user_id, {}).get(
+                        "profile_picture", ""
+                    ),
                     name=user_data_map.get(message.user_id, {}).get("name", ""),
-                    surname=user_data_map.get(message.user_id, {}).get("surname", "")
-                )
+                    surname=user_data_map.get(message.user_id, {}).get("surname", ""),
+                ),
             )
             for message in messages
         ]
 
+        if message_response is None:
+            log.info("Messages Not Found")
+            return Empty()
+
         return message_pb2.GetMessagesResponse(message=message_response)
 
+    async def DeleteMessage(self, request, context):
+        message = (
+            (
+                await self.session.execute(
+                    select(MessageModel).filter_by(
+                        id=request.id, user_id=request.user_id
+                    )
+                )
+            )
+            .scalars()
+            .first()
+        )
 
-    
+        if not message:
+            log.info("Message Not Found")
+            return Empty()
+
+        log.info("Deleted Succsesfully")
+        await self.session.delete(message)
+        await self.session.commit()
+
+        return Empty()
+
+    async def UpdateMessage(self, request, context):
+        message = (
+            (await self.session.execute(select(MessageModel).filter_by(id=request.id)))
+            .scalars()
+            .first()
+        )
+
+        if not message:
+            log.info("Message Not Found")
+            return Empty()
+
+        for name, value in request.DESCRIPTOR.fields_by_name.items():
+            if hasattr(message, name) and value:
+                setattr(message, name, getattr(request, name))
+
+        log.info(f"Message Updated Succsesuflly, id {message.id}")
+
+        await self.session.commit()
+
+        return Empty()
+
     async def _get_data_from_url(self, url: str, accses_token: str):
         async with httpx.AsyncClient() as client:
-            response = await client.get(url, headers={"Authorization": f"Bearer {accses_token}"},)
+            response = await client.get(
+                url,
+                headers={"Authorization": f"Bearer {accses_token}"},
+            )
             if response is not None:
                 return response.json()
             return None
-        
-
-
 
 
 async def message_run(addr="localhost:50054"):

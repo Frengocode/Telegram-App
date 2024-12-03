@@ -1,6 +1,9 @@
-from fastapi import Depends, APIRouter
+from fastapi import Depends, APIRouter, File, UploadFile
 from protos import user_pb2_grpc, user_pb2
-from services.api.v1.user_service.scheme import CreateUserSceheme
+from services.api.v1.user_service.scheme import (
+    CreateUserSceheme,
+    UpdateProfileRequestScheme,
+)
 from services.api.v1.user_service.client import grpc_user_client
 from google.protobuf.json_format import MessageToDict
 from typing import Annotated
@@ -56,5 +59,42 @@ async def get_user_by_id(
     client: Annotated[user_pb2_grpc.UserServiceStub, Depends(grpc_user_client)],
 ):
     response = await client.GetUserByID(user_pb2.GetUserByIdRequest(id=id))
+
+    return MessageToDict(response)
+
+
+@user_serivce_router.patch("/update-user-profile/")
+async def update_profile(
+    client: Annotated[user_pb2_grpc.UserServiceStub, Depends(grpc_user_client)],
+    request: UpdateProfileRequestScheme,
+    current_user: Annotated[SUser, Depends(get_current_user)],
+):
+    response = await client.UpdateProfile(
+        user_pb2.UpdateProfileRequest(
+            user_id=int(current_user.id),
+            username=request.username,
+            surname=request.surname,
+            name=request.name,
+            email=request.email,
+        )
+    )
+
+    return MessageToDict(response)
+
+
+@user_serivce_router.patch("/update-profile-picture/")
+async def update_profile_picture(
+    client: Annotated[user_pb2_grpc.UserServiceStub, Depends(grpc_user_client)],
+    current_user: Annotated[SUser, Depends(get_current_user)],
+    profile_picture: UploadFile = File(...),
+):
+    
+    file_content = await profile_picture.read()
+
+    response = await client.UpdateProfilePicture(
+        user_pb2.UpdateProfilePictureRequest(
+            profile_picture=file_content, user_id=int(current_user.id)
+        )
+    )
 
     return MessageToDict(response)

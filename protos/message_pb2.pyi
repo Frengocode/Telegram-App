@@ -1,3 +1,4 @@
+from google.protobuf import empty_pb2 as _empty_pb2
 from google.protobuf.internal import containers as _containers
 from google.protobuf import descriptor as _descriptor
 from google.protobuf import message as _message
@@ -72,3 +73,21 @@ class MessageUser(_message.Message):
     name: str
     surname: str
     def __init__(self, id: _Optional[int] = ..., username: _Optional[str] = ..., profile_picture: _Optional[str] = ..., name: _Optional[str] = ..., surname: _Optional[str] = ...) -> None: ...
+
+class DeleteMessageRequest(_message.Message):
+    __slots__ = ("id", "user_id")
+    ID_FIELD_NUMBER: _ClassVar[int]
+    USER_ID_FIELD_NUMBER: _ClassVar[int]
+    id: int
+    user_id: int
+    def __init__(self, id: _Optional[int] = ..., user_id: _Optional[int] = ...) -> None: ...
+
+class UpdateMessageRequest(_message.Message):
+    __slots__ = ("message", "user_id", "id")
+    MESSAGE_FIELD_NUMBER: _ClassVar[int]
+    USER_ID_FIELD_NUMBER: _ClassVar[int]
+    ID_FIELD_NUMBER: _ClassVar[int]
+    message: str
+    user_id: int
+    id: int
+    def __init__(self, message: _Optional[str] = ..., user_id: _Optional[int] = ..., id: _Optional[int] = ...) -> None: ...

@@ -3,6 +3,7 @@ from datetime import datetime, timedelta
 import colorlog
 import logging
 from jose import jwt
+from redis.asyncio import StrictRedis
 
 
 ALGORITHM = "HS256"
@@ -61,3 +62,7 @@ def create_access_token(data: dict, expires_delta: timedelta = None) -> str:
     to_encode.update({"exp": expire})
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt
+
+
+async def get_redis_client() -> StrictRedis:
+    return StrictRedis(host="localhost", port=6379, db=0, decode_responses=True)

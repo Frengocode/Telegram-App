@@ -14,7 +14,7 @@ auth_service_router = APIRouter(tags=["Auth Service"])
 @auth_service_router.post("/auth-login/", response_model=dict)
 async def login(
     client: Annotated[auth_pb2_grpc.AuthServiceStub, Depends(grpc_auth_client)],
-    request: LoginRequestScheme,
+    request: security.OAuth2PasswordRequestForm = Depends(),
 ):
     async with httpx.AsyncClient() as client:
         response = await client.get(

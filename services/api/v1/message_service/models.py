@@ -3,7 +3,6 @@ from sqlalchemy import String, Integer, Boolean
 from database.message_database import MessageBase
 
 
-
 class MessageModel(MessageBase):
     __tablename__ = "messages"
 
@@ -11,4 +10,3 @@ class MessageModel(MessageBase):
     chat_id: Mapped[int] = mapped_column(Integer, nullable=False)
     user_id: Mapped[int] = mapped_column(Integer, nullable=False)
     is_updated: Mapped[bool] = mapped_column(Boolean, default=False)
-    

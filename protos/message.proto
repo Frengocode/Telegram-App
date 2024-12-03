@@ -1,4 +1,6 @@
 syntax = "proto3";
+import "google/protobuf/empty.proto";
+
 
 package message;
 
@@ -48,13 +50,30 @@ message MessageUser{
     string profile_picture = 3;
     string name = 4;
     string surname = 5;
-}
+};
+
+message DeleteMessageRequest{
+    uint64 id = 1;
+    uint64 user_id = 2;
+};
+
+
+message UpdateMessageRequest{
+    string message = 1;
+    uint64 user_id = 2;
+    uint32 id = 3; 
+
+};
+
 
 
 service MessageService{
 
     rpc CreateMessage(CreateMessageRequest) returns (CreateMessageResponse);
     rpc GetMessages(GetMessagesRequest) returns (GetMessagesResponse);
+    rpc DeleteMessage(DeleteMessageRequest) returns (google.protobuf.Empty);
+    rpc UpdateMessage(UpdateMessageRequest) returns(google.protobuf.Empty);
+
     
 }
 

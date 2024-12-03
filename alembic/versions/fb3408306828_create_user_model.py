@@ -19,17 +19,16 @@ branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
 
 
-
 def upgrade():
     op.create_table(
-        'messages',
-        sa.Column('id', sa.Integer(), primary_key=True, autoincrement=True),
-        sa.Column('message', sa.String(), nullable=False),
-        sa.Column('chat_id', sa.Integer(), nullable=False),
-        sa.Column('user_id', sa.Integer(), nullable=False),
-        sa.Column('is_updated', sa.Boolean(), server_default=sa.text('false')),
+        "messages",
+        sa.Column("id", sa.Integer(), primary_key=True, autoincrement=True),
+        sa.Column("message", sa.String(), nullable=False),
+        sa.Column("chat_id", sa.Integer(), nullable=False),
+        sa.Column("user_id", sa.Integer(), nullable=False),
+        sa.Column("is_updated", sa.Boolean(), server_default=sa.text("false")),
     )
 
 
 def downgrade():
-    op.drop_table('messages')
+    op.drop_table("messages")

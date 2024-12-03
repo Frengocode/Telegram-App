@@ -21,22 +21,22 @@ class ChatService(chat_pb2_grpc.ChatServiceServicer):
         self.session = session
         self.current_user = current_user
 
-    async def CreateChat(self, request, context = None):
+    async def CreateChat(self, request, context=None):
 
         log.info(f"author id {request.author_id}")
 
         exist_chat = (
             (
-                await self.session.execute( 
+                await self.session.execute(
                     select(ChatModel).filter_by(
-                        chat_member_id=request.member_id, chat_author_id=request.author_id
+                        chat_member_id=request.member_id,
+                        chat_author_id=request.author_id,
                     )
                 )
             )
             .scalars()
             .first()
         )
-
 
         if exist_chat:
             log.info(f"Chat All ready created with this user {request.member_id}")
@@ -51,7 +51,6 @@ class ChatService(chat_pb2_grpc.ChatServiceServicer):
                 chat_author_id=request.author_id,
                 chat_member_id=int(member_data.get("user").get("id")),
             )
-
 
         try:
             self.session.add(chat)
@@ -70,15 +69,24 @@ class ChatService(chat_pb2_grpc.ChatServiceServicer):
                 chat_author_id=request.author_id,
             )
         )
-    
+
     async def GetUserChats(self, request, context):
-        chats = (await self.session.execute(
-            select(ChatModel)
-            .order_by(ChatModel.created_at.desc())
-            .filter(or_(
-                ChatModel.chat_member_id == request.author_id,
-                ChatModel.chat_author_id == request.author_id,
-            )))).scalars().all()
+        chats = (
+            (
+                await self.session.execute(
+                    select(ChatModel)
+                    .order_by(ChatModel.created_at.desc())
+                    .filter(
+                        or_(
+                            ChatModel.chat_member_id == request.author_id,
+                            ChatModel.chat_author_id == request.author_id,
+                        )
+                    )
+                )
+            )
+            .scalars()
+            .all()
+        )
 
         if not chats:
             return Empty()
@@ -86,18 +94,22 @@ class ChatService(chat_pb2_grpc.ChatServiceServicer):
         user_data_map = {}
         for chat in chats:
             try:
-                user_data = await self.get_data_from_url(f"http://localhost:8000/user-service/api/v1/get-user-by-id/{chat.chat_member_id}/")
-                if user_data and 'user' in user_data:  # Проверяем наличие данных
-                    user_data_map[chat.chat_member_id] = user_data['user']
+                user_data = await self.get_data_from_url(
+                    f"http://localhost:8000/user-service/api/v1/get-user-by-id/{chat.chat_member_id}/"
+                )
+                if user_data and "user" in user_data:  # Проверяем наличие данных
+                    user_data_map[chat.chat_member_id] = user_data["user"]
             except Exception as e:
                 print(f"Error fetching user data for {chat.chat_member_id}: {e}")
 
         author_data_map = {}
         for chat in chats:
             try:
-                user_data = await self.get_data_from_url(f"http://localhost:8000/user-service/api/v1/get-user-by-id/{chat.chat_author_id}/")
-                if user_data and 'user' in user_data: 
-                    author_data_map[chat.chat_author_id] = user_data['user']
+                user_data = await self.get_data_from_url(
+                    f"http://localhost:8000/user-service/api/v1/get-user-by-id/{chat.chat_author_id}/"
+                )
+                if user_data and "user" in user_data:
+                    author_data_map[chat.chat_author_id] = user_data["user"]
             except Exception as e:
                 print(f"Error fetching user data for {chat.chat_member_id}: {e}")
 
@@ -107,24 +119,35 @@ class ChatService(chat_pb2_grpc.ChatServiceServicer):
                 chat_author_id=chat.chat_author_id,
                 chat_member_id=chat.chat_member_id,
                 chat_author=chat_pb2.ChatUser(
-                id=int(author_data_map.get(chat.chat_author_id, {}).get("id", 0)),
-                username=author_data_map.get(chat.chat_author_id, {}).get("username", ""),
-                profile_picture=author_data_map.get(chat.chat_author_id, {}).get("profile_picture", ""),
-                name=author_data_map.get(chat.chat_author_id, {}).get("name", ""),
-                surname=author_data_map.get(chat.chat_author_id, {}).get("surname", ""),
-                age=author_data_map.get(chat.chat_author_id, {}).get("age", 0),
-                email=author_data_map.get(chat.chat_author_id, {}).get("email", ""),
+                    id=int(author_data_map.get(chat.chat_author_id, {}).get("id", 0)),
+                    username=author_data_map.get(chat.chat_author_id, {}).get(
+                        "username", ""
+                    ),
+                    profile_picture=author_data_map.get(chat.chat_author_id, {}).get(
+                        "profile_picture", ""
+                    ),
+                    name=author_data_map.get(chat.chat_author_id, {}).get("name", ""),
+                    surname=author_data_map.get(chat.chat_author_id, {}).get(
+                        "surname", ""
+                    ),
+                    age=author_data_map.get(chat.chat_author_id, {}).get("age", 0),
+                    email=author_data_map.get(chat.chat_author_id, {}).get("email", ""),
                 ),
                 chat_member=chat_pb2.ChatUser(
-                id=int(user_data_map.get(chat.chat_member_id, {}).get("id", 0)),
-                username=user_data_map.get(chat.chat_member_id, {}).get("username", ""),
-                profile_picture=user_data_map.get(chat.chat_member_id, {}).get("profile_picture", ""),
-                name=user_data_map.get(chat.chat_member_id, {}).get("name", ""),
-                surname=user_data_map.get(chat.chat_member_id, {}).get("surname", ""),
-                age=user_data_map.get(chat.chat_member_id, {}).get("age", 0),
-                email=user_data_map.get(chat.chat_member_id, {}).get("email", ""),
-
-                )
+                    id=int(user_data_map.get(chat.chat_member_id, {}).get("id", 0)),
+                    username=user_data_map.get(chat.chat_member_id, {}).get(
+                        "username", ""
+                    ),
+                    profile_picture=user_data_map.get(chat.chat_member_id, {}).get(
+                        "profile_picture", ""
+                    ),
+                    name=user_data_map.get(chat.chat_member_id, {}).get("name", ""),
+                    surname=user_data_map.get(chat.chat_member_id, {}).get(
+                        "surname", ""
+                    ),
+                    age=user_data_map.get(chat.chat_member_id, {}).get("age", 0),
+                    email=user_data_map.get(chat.chat_member_id, {}).get("email", ""),
+                ),
             )
             for chat in chats
         ]
@@ -133,55 +156,73 @@ class ChatService(chat_pb2_grpc.ChatServiceServicer):
             chat=chat_response,
         )
 
-
-    
     async def GetUserChat(self, request, context):
 
-        chat = (await self.session.execute(
-            select(ChatModel)
-            .filter(ChatModel.id == request.id)
-            .filter(or_(ChatModel.chat_author_id == request.author_id, ChatModel.chat_member_id == request.author_id))
-        )).scalars().first()
+        chat = (
+            (
+                await self.session.execute(
+                    select(ChatModel)
+                    .filter(ChatModel.id == request.id)
+                    .filter(
+                        or_(
+                            ChatModel.chat_author_id == request.author_id,
+                            ChatModel.chat_member_id == request.author_id,
+                        )
+                    )
+                )
+            )
+            .scalars()
+            .first()
+        )
 
         if not chat:
             log.info("Chat Not Found")
             return Empty()
-        
-        chat_members_data = await self.get_data_from_url(f"http://localhost:8000/user-service/api/v1/get-user-by-id/{chat.chat_member_id}/")
-        
+
+        chat_members_data = await self.get_data_from_url(
+            f"http://localhost:8000/user-service/api/v1/get-user-by-id/{chat.chat_member_id}/"
+        )
+
         log.info(f"Getting User Chat {request.id}")
         return chat_pb2.GetUserChatResponse(
             chat=chat_pb2.Chat(
                 chat_author_id=int(chat.chat_author_id),
                 chat_member_id=chat.chat_member_id,
                 chat_member=chat_pb2.ChatUser(
-                id=int(chat_members_data.get("user").get("id")),
-                username=chat_members_data.get("user").get("username"),
-                profile_picture=chat_members_data.get("profile_picture")
-
-            ),
+                    id=int(chat_members_data.get("user").get("id")),
+                    username=chat_members_data.get("user").get("username"),
+                    profile_picture=chat_members_data.get("profile_picture"),
+                ),
             ),
         )
-    
+
     async def DeleteChat(self, request, context):
-        chat = (await self.session.execute(
-            select(ChatModel)
-            .filter_by(id = request.id)
-            .filter(or_(ChatModel.chat_author_id == request.author_id, ChatModel.chat_member_id == request.author_id))
-        )).scalars().first()
+        chat = (
+            (
+                await self.session.execute(
+                    select(ChatModel)
+                    .filter_by(id=request.id)
+                    .filter(
+                        or_(
+                            ChatModel.chat_author_id == request.author_id,
+                            ChatModel.chat_member_id == request.author_id,
+                        )
+                    )
+                )
+            )
+            .scalars()
+            .first()
+        )
 
         if not chat:
             log.info("Chat Not Found Or User Error")
             return Empty()
-        
+
         log.info("Deleted Succsesfully")
         await self.session.delete(chat)
         await self.session.commit()
 
-        return chat_pb2.DeleteChatResponse(
-            message="Deleted Succsesfully"
-        )
-
+        return chat_pb2.DeleteChatResponse(message="Deleted Succsesfully")
 
     async def get_data_from_url(self, url: str):
         async with httpx.AsyncClient() as client:
