@@ -16,6 +16,12 @@ message CreateMessageRequest{
     string message = 2;
     uint64 user_id = 3;
     string token = 4;
+
+    string username = 5;
+    string profile_picture = 6;
+    string name = 7;
+
+
 };
 
 
@@ -31,6 +37,7 @@ message GetMessagesResponse{
 message GetMessagesRequest{
     uint64 chat_id = 1;
     uint64 user_id = 2;
+    string token = 3;
 };
 
 
