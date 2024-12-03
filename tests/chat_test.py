@@ -4,7 +4,6 @@ import httpx
 import pytest
 
 
-
 @pytest.mark.asyncio
 async def test_create_chat():
     token = await get_auth_token()
