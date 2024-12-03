@@ -3,6 +3,8 @@ from services.api.v1.user_service.router import user_serivce_router
 from services.api.v1.auth_service.router import auth_service_router
 from services.api.v1.chat_service.router import chat_service_router
 from services.api.v1.message_service.router import message_service_router
+from database.chat_database import chat_engine, ChatBase
+from database.user_database import user_engine, UserBase
 
 from fastapi.middleware.cors import CORSMiddleware
 from database.chat_database import ChatBase, chat_engine
@@ -14,7 +16,7 @@ app = FastAPI(title="Telegram App")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],
+    allow_origins=[""],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -30,6 +32,14 @@ app.include_router(message_service_router)
 async def create_teables():
     async with message_engine.begin() as conn:
         await conn.run_sync(MessageBase.metadata.create_all)
+    
+    async with user_engine.begin() as conn:
+        await conn.run_sync(UserBase.metadata.create_all)
+
+    async with chat_engine.begin() as conn:
+        await conn.run_sync(ChatBase.metadata.create_all)
+
+
 
 @app.on_event("startup")
 async def on_startup():
