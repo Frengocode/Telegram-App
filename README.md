@@ -1,6 +1,7 @@
 <p align="center">
   <a href="" rel="noopener">
- <img width=200px height=200px src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Telegram_logo.svg/2048px-Telegram_logo.svg.png" alt="Project logo"></a>
+    <img width=200px height=200px src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Telegram_logo.svg/2048px-Telegram_logo.svg.png" alt="Project logo">
+  </a>
 </p>
 
 <h3 align="center">Telegram-App</h3>
@@ -16,9 +17,7 @@
 
 ---
 
-<p align="center"> A project aimed at creating a telegram-like app to gain experience in Python development.
-    <br> 
-</p>
+<p align="center">A project aimed at creating a Telegram-like app to gain experience in Python development.</p>
 
 ## 📝 Table of Contents
 
@@ -50,54 +49,17 @@ To run the project, you need to have the following installed:
 1. Clone the repository:
    ```bash
    git clone https://github.com/Frengocode/Telegram-App.git
-Create a virtual environment:
+
+2. Create a virtual environment:
+   ```bash
+    python -m venv venv
+
+3.Activate the virtual environment: 
+  ```bash
+  For Windows .\venv\Scripts\activate  For Linux/macOS  source venv/bin/activate
 
 ```bash
-python -m venv venv
-Activate the virtual environment:
+4.Install the required dependencies:
 
-Windows:
-``` bash
-Копировать код
-.\venv\Scripts\activate
-Linux/macOS:
-bash
-Копировать код
-source venv/bin/activate
-Install the required dependencies:
 
-bash
-Копировать код
-pip install -r requirements.txt
-Configure the application by editing the core/config.py file. Make sure to provide the correct values for PostgreSQL and Redis connections.
 
-Create the necessary databases for the services. Database files are located in the database/ folder.
-
-🔧 Running the tests <a name = "tests"></a>
-You can run the unit tests to verify that everything is working correctly. The tests ensure that the application functions as expected.
-
-Example of running tests:
-bash
-Копировать код
-pytest
-🎈 Usage <a name="usage"></a>
-Once everything is set up, you can run the application with the following command:
-
-```bash
-uvicorn app.app:app --reload
-This will start the application on localhost with hot-reloading enabled. You can now access it through your browser or use it with an HTTP client.
-
-🚀 Deployment <a name = "deployment"></a>
-For deploying the application on a live system, make sure you have the correct configuration files for production. You may also want to use tools like Docker for containerization and setting up production-ready environments.
-
-⛏️ Built Using <a name = "built_using"></a>
-FastAPI - Web Framework
-PostgreSQL - Database
-Redis - Caching and messaging system
-✍️ Authors <a name = "authors"></a>
-@Frengocode - Idea & Initial work
-See also the list of contributors who participated in this project.
-
-🎉 Acknowledgements <a name = "acknowledgement"></a>
-Hat tip to anyone whose code was used
-Inspiration: Telegram, FastAPI, Redis, PostgreSQL
