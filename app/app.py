@@ -16,7 +16,7 @@ app = FastAPI(title="Telegram App")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],
+    allow_origins=[""],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -29,9 +29,22 @@ app.include_router(chat_service_router)
 app.include_router(message_service_router)
 
 
+
 # async def create_teables():
 #     async with message_engine.begin() as conn:
 #         await conn.run_sync(MessageBase.metadata.create_all)
+
+
+async def create_teables():
+    async with message_engine.begin() as conn:
+        await conn.run_sync(MessageBase.metadata.create_all)
+    
+    async with user_engine.begin() as conn:
+        await conn.run_sync(UserBase.metadata.create_all)
+
+    async with chat_engine.begin() as conn:
+        await conn.run_sync(ChatBase.metadata.create_all)
+
 
 #     async with user_engine.begin() as conn:
 #         await conn.run_sync(UserBase.metadata.create_all)
