@@ -16,7 +16,7 @@
 
 ---
 
-<p align="center"> Few lines describing your project.
+<p align="center"> A project aimed at creating a telegram-like app to gain experience in Python development.
     <br> 
 </p>
 
@@ -32,7 +32,7 @@
 
 ## 🧐 About <a name = "about"></a>
 
-Write about 1-2 paragraphs describing the purpose of your project.
+This project is designed to provide experience in building scalable applications with Python. The application simulates a Telegram-like messaging platform using Redis and PostgreSQL for managing messages and users. It uses FastAPI for the backend API and aims to help developers learn how to set up web applications with proper configuration and database handling.
 
 ## 🏁 Getting Started <a name = "getting_started"></a>
 
@@ -40,73 +40,64 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-What things you need to install the software and how to install them.
-
-```
-Give examples
-```
+To run the project, you need to have the following installed:
+- Python 3.10+ 
+- Redis
+- PostgreSQL
 
 ### Installing
 
-A step by step series of examples that tell you how to get a development env running.
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/Frengocode/Telegram-App.git
+Create a virtual environment:
 
-Say what the step will be
+```bash
+python -m venv venv
+Activate the virtual environment:
 
-```
-Give the example
-```
+Windows:
+``` bash
+Копировать код
+.\venv\Scripts\activate
+Linux/macOS:
+bash
+Копировать код
+source venv/bin/activate
+Install the required dependencies:
 
-And repeat
+bash
+Копировать код
+pip install -r requirements.txt
+Configure the application by editing the core/config.py file. Make sure to provide the correct values for PostgreSQL and Redis connections.
 
-```
-until finished
-```
+Create the necessary databases for the services. Database files are located in the database/ folder.
 
-End with an example of getting some data out of the system or using it for a little demo.
+🔧 Running the tests <a name = "tests"></a>
+You can run the unit tests to verify that everything is working correctly. The tests ensure that the application functions as expected.
 
-## 🔧 Running the tests <a name = "tests"></a>
+Example of running tests:
+bash
+Копировать код
+pytest
+🎈 Usage <a name="usage"></a>
+Once everything is set up, you can run the application with the following command:
 
-Explain how to run the automated tests for this system.
+```bash
+uvicorn app.app:app --reload
+This will start the application on localhost with hot-reloading enabled. You can now access it through your browser or use it with an HTTP client.
 
-### Break down into end to end tests
+🚀 Deployment <a name = "deployment"></a>
+For deploying the application on a live system, make sure you have the correct configuration files for production. You may also want to use tools like Docker for containerization and setting up production-ready environments.
 
-Explain what these tests test and why
+⛏️ Built Using <a name = "built_using"></a>
+FastAPI - Web Framework
+PostgreSQL - Database
+Redis - Caching and messaging system
+✍️ Authors <a name = "authors"></a>
+@Frengocode - Idea & Initial work
+See also the list of contributors who participated in this project.
 
-```
-Give an example
-```
-
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-## 🎈 Usage <a name="usage"></a>
-
-Add notes about how to use the system.
-
-## 🚀 Deployment <a name = "deployment"></a>
-
-Add additional notes about how to deploy this on a live system.
-
-## ⛏️ Built Using <a name = "built_using"></a>
-
-- [MongoDB](https://www.mongodb.com/) - Database
-- [Express](https://expressjs.com/) - Server Framework
-- [VueJs](https://vuejs.org/) - Web Framework
-- [NodeJs](https://nodejs.org/en/) - Server Environment
-
-## ✍️ Authors <a name = "authors"></a>
-
-- [@kylelobo](https://github.com/kylelobo) - Idea & Initial work
-
-See also the list of [contributors](https://github.com/kylelobo/The-Documentation-Compendium/contributors) who participated in this project.
-
-## 🎉 Acknowledgements <a name = "acknowledgement"></a>
-
-- Hat tip to anyone whose code was used
-- Inspiration
-- References
+🎉 Acknowledgements <a name = "acknowledgement"></a>
+Hat tip to anyone whose code was used
+Inspiration: Telegram, FastAPI, Redis, PostgreSQL
