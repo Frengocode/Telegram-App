@@ -68,7 +68,7 @@ async def websocket_endpoint(websocket: WebSocket, chat_id: int):
 
 
 class MessgaeService(message_pb2_grpc.MessageServiceServicer):
-    def __init__(self, session: AsyncSession,redis_cli: StrictRedis = None):
+    def __init__(self, session: AsyncSession, redis_cli: StrictRedis = None):
         self.session = session
         self.redis_cli = redis_cli
 
@@ -121,13 +121,13 @@ class MessgaeService(message_pb2_grpc.MessageServiceServicer):
                 user_data = await self._get_data_from_url(
                     f"http://localhost:8000/user-service/api/v1/get-user-by-id/{message.user_id}/",
                     access_token=request.token,
-                    cache_name=f"get-user-by-id-{str(message.user_id)}"
+                    cache_name=f"get-user-by-id-{str(message.user_id)}",
                 )
 
                 if isinstance(user_data, str):
-                    user_data = json.loads(user_data) 
+                    user_data = json.loads(user_data)
 
-                user = user_data.get("user", {})  
+                user = user_data.get("user", {})
                 user_data_map[message.user_id] = user
 
             except Exception as e:
@@ -142,7 +142,9 @@ class MessgaeService(message_pb2_grpc.MessageServiceServicer):
                 user=message_pb2.MessageUser(
                     id=int(user_data_map.get(message.user_id, {}).get("id", 0)),
                     username=user_data_map.get(message.user_id, {}).get("username", ""),
-                    profile_picture=user_data_map.get(message.user_id, {}).get("profilePicture", ""),
+                    profile_picture=user_data_map.get(message.user_id, {}).get(
+                        "profilePicture", ""
+                    ),
                     name=user_data_map.get(message.user_id, {}).get("name", ""),
                     surname=user_data_map.get(message.user_id, {}).get("surname", ""),
                 ),
@@ -155,9 +157,6 @@ class MessgaeService(message_pb2_grpc.MessageServiceServicer):
             return Empty()
 
         return message_pb2.GetMessagesResponse(message=message_response)
-
-
-
 
     async def DeleteMessage(self, request, context):
         message = (
@@ -203,7 +202,9 @@ class MessgaeService(message_pb2_grpc.MessageServiceServicer):
 
         return Empty()
 
-    async def _get_data_from_url(self, url: str, access_token: str = None, cache_name: str = None):
+    async def _get_data_from_url(
+        self, url: str, access_token: str = None, cache_name: str = None
+    ):
         cached_data = await self.get_data_from_cache(cache_name)
         if cached_data:
             return json.dumps(cached_data)
@@ -217,12 +218,10 @@ class MessgaeService(message_pb2_grpc.MessageServiceServicer):
         if response.status_code == 200:
             data = response.json()
             if cache_name:
-                await self.redis_cli.setex(
-                    cache_name, 300, json.dumps(data)
-                )
-            return data 
+                await self.redis_cli.setex(cache_name, 300, json.dumps(data))
+            return data
 
-        return None   
+        return None
 
     async def get_data_from_cache(self, cache_name: str):
         if not cache_name:
@@ -233,7 +232,7 @@ class MessgaeService(message_pb2_grpc.MessageServiceServicer):
             return json.loads(cached_data)
 
         return None
-    
+
 
 async def message_run(addr="localhost:50054"):
     server = grpc.aio.server()
