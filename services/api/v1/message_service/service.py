@@ -1,12 +1,13 @@
 from fastapi import WebSocket, WebSocketDisconnect, WebSocketException
 from sqlalchemy.ext.asyncio import AsyncSession
-from google.protobuf.json_format import MessageToDict
+from google.protobuf.json_format import MessageToDict, MessageToJson
 from google.protobuf.empty_pb2 import Empty
 from sqlalchemy import select
 from protos import message_pb2, message_pb2_grpc
 from database.message_database import get_message_sesison, async_session_maker
 from services.api.v1.message_service.models import MessageModel
-from uitils.utils import log
+from redis.asyncio import StrictRedis
+from uitils.utils import log, get_redis_client
 from datetime import datetime
 import httpx
 import grpc
@@ -67,14 +68,15 @@ async def websocket_endpoint(websocket: WebSocket, chat_id: int):
 
 
 class MessgaeService(message_pb2_grpc.MessageServiceServicer):
-    def __init__(self, session: AsyncSession):
+    def __init__(self, session: AsyncSession, redis_cli: StrictRedis = None):
         self.session = session
+        self.redis_cli = redis_cli
 
     async def CreateMessage(self, request, context):
 
         chat = await self._get_data_from_url(
             f"http://localhost:8000/chat-service/api/v1/get-user-chat/{request.chat_id}/",
-            accses_token=request.token,
+            access_token=request.token,
         )
         if chat is None:
             log.info("Chat Not Found")
@@ -111,19 +113,25 @@ class MessgaeService(message_pb2_grpc.MessageServiceServicer):
         )
 
         if not messages:
-            return message_pb2.GetMessagesResponse(messages=[])
+            return message_pb2.GetMessagesResponse(message=[])
 
         user_data_map = {}
         for message in messages:
             try:
                 user_data = await self._get_data_from_url(
                     f"http://localhost:8000/user-service/api/v1/get-user-by-id/{message.user_id}/",
-                    accses_token=request.token,
+                    access_token=request.token,
+                    cache_name=f"get-user-by-id-{str(message.user_id)}",
                 )
-                if user_data and "user" in user_data:
-                    user_data_map[message.user_id] = user_data["user"]
+
+                if isinstance(user_data, str):
+                    user_data = json.loads(user_data)
+
+                user = user_data.get("user", {})
+                user_data_map[message.user_id] = user
+
             except Exception as e:
-                log.info(f"Error fetching user data for {message.user_id}: {e}")
+                log.error(f"Error fetching user data for {message.user_id}: {e}")
 
         message_response = [
             message_pb2.Message(
@@ -135,7 +143,7 @@ class MessgaeService(message_pb2_grpc.MessageServiceServicer):
                     id=int(user_data_map.get(message.user_id, {}).get("id", 0)),
                     username=user_data_map.get(message.user_id, {}).get("username", ""),
                     profile_picture=user_data_map.get(message.user_id, {}).get(
-                        "profile_picture", ""
+                        "profilePicture", ""
                     ),
                     name=user_data_map.get(message.user_id, {}).get("name", ""),
                     surname=user_data_map.get(message.user_id, {}).get("surname", ""),
@@ -144,7 +152,7 @@ class MessgaeService(message_pb2_grpc.MessageServiceServicer):
             for message in messages
         ]
 
-        if message_response is None:
+        if not message_response:
             log.info("Messages Not Found")
             return Empty()
 
@@ -194,25 +202,44 @@ class MessgaeService(message_pb2_grpc.MessageServiceServicer):
 
         return Empty()
 
-    async def _get_data_from_url(self, url: str, accses_token: str):
+    async def _get_data_from_url(
+        self, url: str, access_token: str = None, cache_name: str = None
+    ):
+        cached_data = await self.get_data_from_cache(cache_name)
+        if cached_data:
+            return json.dumps(cached_data)
+
         async with httpx.AsyncClient() as client:
             response = await client.get(
                 url,
-                headers={"Authorization": f"Bearer {accses_token}"},
+                headers={"Authorization": f"Bearer {access_token}"},
             )
-            if response is not None:
-                return response.json()
+
+        if response.status_code == 200:
+            data = response.json()
+            if cache_name:
+                await self.redis_cli.setex(cache_name, 300, json.dumps(data))
+            return data
+
+        return None
+
+    async def get_data_from_cache(self, cache_name: str):
+        if not cache_name:
             return None
+
+        cached_data = await self.redis_cli.get(cache_name)
+        if cached_data:
+            return json.loads(cached_data)
+
+        return None
 
 
 async def message_run(addr="localhost:50054"):
     server = grpc.aio.server()
 
     async with async_session_maker() as session:
-        message_service = MessgaeService(session=session)
-
-    # # async with get_current_user() as cr:
-    # chat_service = ChatService()
+        redis_cli = await get_redis_client()
+        message_service = MessgaeService(session=session, redis_cli=redis_cli)
 
     message_pb2_grpc.add_MessageServiceServicer_to_server(message_service, server)
     server.add_insecure_port(addr)
