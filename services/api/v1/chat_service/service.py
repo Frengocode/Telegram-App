@@ -186,6 +186,7 @@ class ChatService(chat_pb2_grpc.ChatServiceServicer):
         log.info(f"Getting User Chat {request.id}")
         return chat_pb2.GetUserChatResponse(
             chat=chat_pb2.Chat(
+                id = chat.id,
                 chat_author_id=int(chat.chat_author_id),
                 chat_member_id=chat.chat_member_id,
                 chat_member=chat_pb2.ChatUser(
