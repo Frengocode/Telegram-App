@@ -73,7 +73,6 @@ Example of running tests:
     ```bash
       python -m pytest tests/
 
-
 9. ⛏️ Built Using <a name = "built_using"></a>
 FastAPI - Web Framework
 PostgreSQL - Database
