@@ -74,6 +74,16 @@ Example of running tests:
     ```bash
       python -m pytest tests/
 
+9. Run All gRPC Client:
+    ```bash
+    python grpc_client.py
+    python auth_client.py
+    python chat_client.py
+    python message_client.py
+    
+
+    
+
 9. ⛏️ Built Using <a name = "built_using"></a>
 FastAPI - Web Framework
 PostgreSQL - Database
