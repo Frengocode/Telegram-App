@@ -6,23 +6,26 @@ import warnings
 from google.protobuf import empty_pb2 as google_dot_protobuf_dot_empty__pb2
 from protos import message_pb2 as protos_dot_message__pb2
 
-GRPC_GENERATED_VERSION = '1.68.0'
+GRPC_GENERATED_VERSION = "1.68.0"
 GRPC_VERSION = grpc.__version__
 _version_not_supported = False
 
 try:
     from grpc._utilities import first_version_is_lower
-    _version_not_supported = first_version_is_lower(GRPC_VERSION, GRPC_GENERATED_VERSION)
+
+    _version_not_supported = first_version_is_lower(
+        GRPC_VERSION, GRPC_GENERATED_VERSION
+    )
 except ImportError:
     _version_not_supported = True
 
 if _version_not_supported:
     raise RuntimeError(
-        f'The grpc package installed is at version {GRPC_VERSION},'
-        + f' but the generated code in protos/message_pb2_grpc.py depends on'
-        + f' grpcio>={GRPC_GENERATED_VERSION}.'
-        + f' Please upgrade your grpc module to grpcio>={GRPC_GENERATED_VERSION}'
-        + f' or downgrade your generated code using grpcio-tools<={GRPC_VERSION}.'
+        f"The grpc package installed is at version {GRPC_VERSION},"
+        + f" but the generated code in protos/message_pb2_grpc.py depends on"
+        + f" grpcio>={GRPC_GENERATED_VERSION}."
+        + f" Please upgrade your grpc module to grpcio>={GRPC_GENERATED_VERSION}"
+        + f" or downgrade your generated code using grpcio-tools<={GRPC_VERSION}."
     )
 
 
@@ -36,25 +39,29 @@ class MessageServiceStub(object):
             channel: A grpc.Channel.
         """
         self.CreateMessage = channel.unary_unary(
-                '/message.MessageService/CreateMessage',
-                request_serializer=protos_dot_message__pb2.CreateMessageRequest.SerializeToString,
-                response_deserializer=protos_dot_message__pb2.CreateMessageResponse.FromString,
-                _registered_method=True)
+            "/message.MessageService/CreateMessage",
+            request_serializer=protos_dot_message__pb2.CreateMessageRequest.SerializeToString,
+            response_deserializer=protos_dot_message__pb2.CreateMessageResponse.FromString,
+            _registered_method=True,
+        )
         self.GetMessages = channel.unary_unary(
-                '/message.MessageService/GetMessages',
-                request_serializer=protos_dot_message__pb2.GetMessagesRequest.SerializeToString,
-                response_deserializer=protos_dot_message__pb2.GetMessagesResponse.FromString,
-                _registered_method=True)
+            "/message.MessageService/GetMessages",
+            request_serializer=protos_dot_message__pb2.GetMessagesRequest.SerializeToString,
+            response_deserializer=protos_dot_message__pb2.GetMessagesResponse.FromString,
+            _registered_method=True,
+        )
         self.DeleteMessage = channel.unary_unary(
-                '/message.MessageService/DeleteMessage',
-                request_serializer=protos_dot_message__pb2.DeleteMessageRequest.SerializeToString,
-                response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-                _registered_method=True)
+            "/message.MessageService/DeleteMessage",
+            request_serializer=protos_dot_message__pb2.DeleteMessageRequest.SerializeToString,
+            response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+            _registered_method=True,
+        )
         self.UpdateMessage = channel.unary_unary(
-                '/message.MessageService/UpdateMessage',
-                request_serializer=protos_dot_message__pb2.UpdateMessageRequest.SerializeToString,
-                response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-                _registered_method=True)
+            "/message.MessageService/UpdateMessage",
+            request_serializer=protos_dot_message__pb2.UpdateMessageRequest.SerializeToString,
+            response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+            _registered_method=True,
+        )
 
 
 class MessageServiceServicer(object):
@@ -63,76 +70,79 @@ class MessageServiceServicer(object):
     def CreateMessage(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
     def GetMessages(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
     def DeleteMessage(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
     def UpdateMessage(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
 
 def add_MessageServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'CreateMessage': grpc.unary_unary_rpc_method_handler(
-                    servicer.CreateMessage,
-                    request_deserializer=protos_dot_message__pb2.CreateMessageRequest.FromString,
-                    response_serializer=protos_dot_message__pb2.CreateMessageResponse.SerializeToString,
-            ),
-            'GetMessages': grpc.unary_unary_rpc_method_handler(
-                    servicer.GetMessages,
-                    request_deserializer=protos_dot_message__pb2.GetMessagesRequest.FromString,
-                    response_serializer=protos_dot_message__pb2.GetMessagesResponse.SerializeToString,
-            ),
-            'DeleteMessage': grpc.unary_unary_rpc_method_handler(
-                    servicer.DeleteMessage,
-                    request_deserializer=protos_dot_message__pb2.DeleteMessageRequest.FromString,
-                    response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
-            ),
-            'UpdateMessage': grpc.unary_unary_rpc_method_handler(
-                    servicer.UpdateMessage,
-                    request_deserializer=protos_dot_message__pb2.UpdateMessageRequest.FromString,
-                    response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
-            ),
+        "CreateMessage": grpc.unary_unary_rpc_method_handler(
+            servicer.CreateMessage,
+            request_deserializer=protos_dot_message__pb2.CreateMessageRequest.FromString,
+            response_serializer=protos_dot_message__pb2.CreateMessageResponse.SerializeToString,
+        ),
+        "GetMessages": grpc.unary_unary_rpc_method_handler(
+            servicer.GetMessages,
+            request_deserializer=protos_dot_message__pb2.GetMessagesRequest.FromString,
+            response_serializer=protos_dot_message__pb2.GetMessagesResponse.SerializeToString,
+        ),
+        "DeleteMessage": grpc.unary_unary_rpc_method_handler(
+            servicer.DeleteMessage,
+            request_deserializer=protos_dot_message__pb2.DeleteMessageRequest.FromString,
+            response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+        ),
+        "UpdateMessage": grpc.unary_unary_rpc_method_handler(
+            servicer.UpdateMessage,
+            request_deserializer=protos_dot_message__pb2.UpdateMessageRequest.FromString,
+            response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+        ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'message.MessageService', rpc_method_handlers)
+        "message.MessageService", rpc_method_handlers
+    )
     server.add_generic_rpc_handlers((generic_handler,))
-    server.add_registered_method_handlers('message.MessageService', rpc_method_handlers)
+    server.add_registered_method_handlers("message.MessageService", rpc_method_handlers)
 
 
- # This class is part of an EXPERIMENTAL API.
+# This class is part of an EXPERIMENTAL API.
 class MessageService(object):
     """Missing associated documentation comment in .proto file."""
 
     @staticmethod
-    def CreateMessage(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
+    def CreateMessage(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/message.MessageService/CreateMessage',
+            "/message.MessageService/CreateMessage",
             protos_dot_message__pb2.CreateMessageRequest.SerializeToString,
             protos_dot_message__pb2.CreateMessageResponse.FromString,
             options,
@@ -143,23 +153,26 @@ class MessageService(object):
             wait_for_ready,
             timeout,
             metadata,
-            _registered_method=True)
+            _registered_method=True,
+        )
 
     @staticmethod
-    def GetMessages(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
+    def GetMessages(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/message.MessageService/GetMessages',
+            "/message.MessageService/GetMessages",
             protos_dot_message__pb2.GetMessagesRequest.SerializeToString,
             protos_dot_message__pb2.GetMessagesResponse.FromString,
             options,
@@ -170,23 +183,26 @@ class MessageService(object):
             wait_for_ready,
             timeout,
             metadata,
-            _registered_method=True)
+            _registered_method=True,
+        )
 
     @staticmethod
-    def DeleteMessage(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
+    def DeleteMessage(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/message.MessageService/DeleteMessage',
+            "/message.MessageService/DeleteMessage",
             protos_dot_message__pb2.DeleteMessageRequest.SerializeToString,
             google_dot_protobuf_dot_empty__pb2.Empty.FromString,
             options,
@@ -197,23 +213,26 @@ class MessageService(object):
             wait_for_ready,
             timeout,
             metadata,
-            _registered_method=True)
+            _registered_method=True,
+        )
 
     @staticmethod
-    def UpdateMessage(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
+    def UpdateMessage(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/message.MessageService/UpdateMessage',
+            "/message.MessageService/UpdateMessage",
             protos_dot_message__pb2.UpdateMessageRequest.SerializeToString,
             google_dot_protobuf_dot_empty__pb2.Empty.FromString,
             options,
@@ -224,4 +243,5 @@ class MessageService(object):
             wait_for_ready,
             timeout,
             metadata,
-            _registered_method=True)
+            _registered_method=True,
+        )

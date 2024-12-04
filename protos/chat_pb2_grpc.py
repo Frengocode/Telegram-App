@@ -5,23 +5,26 @@ import warnings
 
 from protos import chat_pb2 as protos_dot_chat__pb2
 
-GRPC_GENERATED_VERSION = '1.68.0'
+GRPC_GENERATED_VERSION = "1.68.0"
 GRPC_VERSION = grpc.__version__
 _version_not_supported = False
 
 try:
     from grpc._utilities import first_version_is_lower
-    _version_not_supported = first_version_is_lower(GRPC_VERSION, GRPC_GENERATED_VERSION)
+
+    _version_not_supported = first_version_is_lower(
+        GRPC_VERSION, GRPC_GENERATED_VERSION
+    )
 except ImportError:
     _version_not_supported = True
 
 if _version_not_supported:
     raise RuntimeError(
-        f'The grpc package installed is at version {GRPC_VERSION},'
-        + f' but the generated code in protos/chat_pb2_grpc.py depends on'
-        + f' grpcio>={GRPC_GENERATED_VERSION}.'
-        + f' Please upgrade your grpc module to grpcio>={GRPC_GENERATED_VERSION}'
-        + f' or downgrade your generated code using grpcio-tools<={GRPC_VERSION}.'
+        f"The grpc package installed is at version {GRPC_VERSION},"
+        + f" but the generated code in protos/chat_pb2_grpc.py depends on"
+        + f" grpcio>={GRPC_GENERATED_VERSION}."
+        + f" Please upgrade your grpc module to grpcio>={GRPC_GENERATED_VERSION}"
+        + f" or downgrade your generated code using grpcio-tools<={GRPC_VERSION}."
     )
 
 
@@ -35,25 +38,29 @@ class ChatServiceStub(object):
             channel: A grpc.Channel.
         """
         self.CreateChat = channel.unary_unary(
-                '/chat.ChatService/CreateChat',
-                request_serializer=protos_dot_chat__pb2.CreateChatRequest.SerializeToString,
-                response_deserializer=protos_dot_chat__pb2.CreateChatResponse.FromString,
-                _registered_method=True)
+            "/chat.ChatService/CreateChat",
+            request_serializer=protos_dot_chat__pb2.CreateChatRequest.SerializeToString,
+            response_deserializer=protos_dot_chat__pb2.CreateChatResponse.FromString,
+            _registered_method=True,
+        )
         self.GetUserChats = channel.unary_unary(
-                '/chat.ChatService/GetUserChats',
-                request_serializer=protos_dot_chat__pb2.GetUserChatsRequest.SerializeToString,
-                response_deserializer=protos_dot_chat__pb2.GetUserChatsResponse.FromString,
-                _registered_method=True)
+            "/chat.ChatService/GetUserChats",
+            request_serializer=protos_dot_chat__pb2.GetUserChatsRequest.SerializeToString,
+            response_deserializer=protos_dot_chat__pb2.GetUserChatsResponse.FromString,
+            _registered_method=True,
+        )
         self.GetUserChat = channel.unary_unary(
-                '/chat.ChatService/GetUserChat',
-                request_serializer=protos_dot_chat__pb2.GetUserChatRequest.SerializeToString,
-                response_deserializer=protos_dot_chat__pb2.GetUserChatResponse.FromString,
-                _registered_method=True)
+            "/chat.ChatService/GetUserChat",
+            request_serializer=protos_dot_chat__pb2.GetUserChatRequest.SerializeToString,
+            response_deserializer=protos_dot_chat__pb2.GetUserChatResponse.FromString,
+            _registered_method=True,
+        )
         self.DeleteChat = channel.unary_unary(
-                '/chat.ChatService/DeleteChat',
-                request_serializer=protos_dot_chat__pb2.DeleteChatRequest.SerializeToString,
-                response_deserializer=protos_dot_chat__pb2.DeleteChatResponse.FromString,
-                _registered_method=True)
+            "/chat.ChatService/DeleteChat",
+            request_serializer=protos_dot_chat__pb2.DeleteChatRequest.SerializeToString,
+            response_deserializer=protos_dot_chat__pb2.DeleteChatResponse.FromString,
+            _registered_method=True,
+        )
 
 
 class ChatServiceServicer(object):
@@ -62,76 +69,79 @@ class ChatServiceServicer(object):
     def CreateChat(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
     def GetUserChats(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
     def GetUserChat(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
     def DeleteChat(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
 
 def add_ChatServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'CreateChat': grpc.unary_unary_rpc_method_handler(
-                    servicer.CreateChat,
-                    request_deserializer=protos_dot_chat__pb2.CreateChatRequest.FromString,
-                    response_serializer=protos_dot_chat__pb2.CreateChatResponse.SerializeToString,
-            ),
-            'GetUserChats': grpc.unary_unary_rpc_method_handler(
-                    servicer.GetUserChats,
-                    request_deserializer=protos_dot_chat__pb2.GetUserChatsRequest.FromString,
-                    response_serializer=protos_dot_chat__pb2.GetUserChatsResponse.SerializeToString,
-            ),
-            'GetUserChat': grpc.unary_unary_rpc_method_handler(
-                    servicer.GetUserChat,
-                    request_deserializer=protos_dot_chat__pb2.GetUserChatRequest.FromString,
-                    response_serializer=protos_dot_chat__pb2.GetUserChatResponse.SerializeToString,
-            ),
-            'DeleteChat': grpc.unary_unary_rpc_method_handler(
-                    servicer.DeleteChat,
-                    request_deserializer=protos_dot_chat__pb2.DeleteChatRequest.FromString,
-                    response_serializer=protos_dot_chat__pb2.DeleteChatResponse.SerializeToString,
-            ),
+        "CreateChat": grpc.unary_unary_rpc_method_handler(
+            servicer.CreateChat,
+            request_deserializer=protos_dot_chat__pb2.CreateChatRequest.FromString,
+            response_serializer=protos_dot_chat__pb2.CreateChatResponse.SerializeToString,
+        ),
+        "GetUserChats": grpc.unary_unary_rpc_method_handler(
+            servicer.GetUserChats,
+            request_deserializer=protos_dot_chat__pb2.GetUserChatsRequest.FromString,
+            response_serializer=protos_dot_chat__pb2.GetUserChatsResponse.SerializeToString,
+        ),
+        "GetUserChat": grpc.unary_unary_rpc_method_handler(
+            servicer.GetUserChat,
+            request_deserializer=protos_dot_chat__pb2.GetUserChatRequest.FromString,
+            response_serializer=protos_dot_chat__pb2.GetUserChatResponse.SerializeToString,
+        ),
+        "DeleteChat": grpc.unary_unary_rpc_method_handler(
+            servicer.DeleteChat,
+            request_deserializer=protos_dot_chat__pb2.DeleteChatRequest.FromString,
+            response_serializer=protos_dot_chat__pb2.DeleteChatResponse.SerializeToString,
+        ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'chat.ChatService', rpc_method_handlers)
+        "chat.ChatService", rpc_method_handlers
+    )
     server.add_generic_rpc_handlers((generic_handler,))
-    server.add_registered_method_handlers('chat.ChatService', rpc_method_handlers)
+    server.add_registered_method_handlers("chat.ChatService", rpc_method_handlers)
 
 
- # This class is part of an EXPERIMENTAL API.
+# This class is part of an EXPERIMENTAL API.
 class ChatService(object):
     """Missing associated documentation comment in .proto file."""
 
     @staticmethod
-    def CreateChat(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
+    def CreateChat(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/chat.ChatService/CreateChat',
+            "/chat.ChatService/CreateChat",
             protos_dot_chat__pb2.CreateChatRequest.SerializeToString,
             protos_dot_chat__pb2.CreateChatResponse.FromString,
             options,
@@ -142,23 +152,26 @@ class ChatService(object):
             wait_for_ready,
             timeout,
             metadata,
-            _registered_method=True)
+            _registered_method=True,
+        )
 
     @staticmethod
-    def GetUserChats(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
+    def GetUserChats(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/chat.ChatService/GetUserChats',
+            "/chat.ChatService/GetUserChats",
             protos_dot_chat__pb2.GetUserChatsRequest.SerializeToString,
             protos_dot_chat__pb2.GetUserChatsResponse.FromString,
             options,
@@ -169,23 +182,26 @@ class ChatService(object):
             wait_for_ready,
             timeout,
             metadata,
-            _registered_method=True)
+            _registered_method=True,
+        )
 
     @staticmethod
-    def GetUserChat(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
+    def GetUserChat(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/chat.ChatService/GetUserChat',
+            "/chat.ChatService/GetUserChat",
             protos_dot_chat__pb2.GetUserChatRequest.SerializeToString,
             protos_dot_chat__pb2.GetUserChatResponse.FromString,
             options,
@@ -196,23 +212,26 @@ class ChatService(object):
             wait_for_ready,
             timeout,
             metadata,
-            _registered_method=True)
+            _registered_method=True,
+        )
 
     @staticmethod
-    def DeleteChat(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
+    def DeleteChat(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/chat.ChatService/DeleteChat',
+            "/chat.ChatService/DeleteChat",
             protos_dot_chat__pb2.DeleteChatRequest.SerializeToString,
             protos_dot_chat__pb2.DeleteChatResponse.FromString,
             options,
@@ -223,4 +242,5 @@ class ChatService(object):
             wait_for_ready,
             timeout,
             metadata,
-            _registered_method=True)
+            _registered_method=True,
+        )

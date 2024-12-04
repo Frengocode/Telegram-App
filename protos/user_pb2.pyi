@@ -1,7 +1,12 @@
 from google.protobuf import empty_pb2 as _empty_pb2
 from google.protobuf import descriptor as _descriptor
 from google.protobuf import message as _message
-from typing import ClassVar as _ClassVar, Mapping as _Mapping, Optional as _Optional, Union as _Union
+from typing import (
+    ClassVar as _ClassVar,
+    Mapping as _Mapping,
+    Optional as _Optional,
+    Union as _Union,
+)
 
 DESCRIPTOR: _descriptor.FileDescriptor
 
@@ -21,7 +26,16 @@ class User(_message.Message):
     surname: str
     age: int
     email: str
-    def __init__(self, id: _Optional[int] = ..., username: _Optional[str] = ..., profile_picture: _Optional[str] = ..., name: _Optional[str] = ..., surname: _Optional[str] = ..., age: _Optional[int] = ..., email: _Optional[str] = ...) -> None: ...
+    def __init__(
+        self,
+        id: _Optional[int] = ...,
+        username: _Optional[str] = ...,
+        profile_picture: _Optional[str] = ...,
+        name: _Optional[str] = ...,
+        surname: _Optional[str] = ...,
+        age: _Optional[int] = ...,
+        email: _Optional[str] = ...,
+    ) -> None: ...
 
 class CreateUserRequest(_message.Message):
     __slots__ = ("username", "password", "name", "email")
@@ -33,7 +47,13 @@ class CreateUserRequest(_message.Message):
     password: str
     name: str
     email: str
-    def __init__(self, username: _Optional[str] = ..., password: _Optional[str] = ..., name: _Optional[str] = ..., email: _Optional[str] = ...) -> None: ...
+    def __init__(
+        self,
+        username: _Optional[str] = ...,
+        password: _Optional[str] = ...,
+        name: _Optional[str] = ...,
+        email: _Optional[str] = ...,
+    ) -> None: ...
 
 class CreateUserResponse(_message.Message):
     __slots__ = ("user",)
@@ -47,7 +67,9 @@ class GetUserByUsernamePasswordRequest(_message.Message):
     PASSWORD_FIELD_NUMBER: _ClassVar[int]
     username: str
     password: str
-    def __init__(self, username: _Optional[str] = ..., password: _Optional[str] = ...) -> None: ...
+    def __init__(
+        self, username: _Optional[str] = ..., password: _Optional[str] = ...
+    ) -> None: ...
 
 class GetUserByUsernamePasswordResponse(_message.Message):
     __slots__ = ("user",)
@@ -71,7 +93,16 @@ class GetUserResponse(_message.Message):
     surname: str
     age: int
     email: str
-    def __init__(self, id: _Optional[int] = ..., username: _Optional[str] = ..., profile_picture: _Optional[str] = ..., name: _Optional[str] = ..., surname: _Optional[str] = ..., age: _Optional[int] = ..., email: _Optional[str] = ...) -> None: ...
+    def __init__(
+        self,
+        id: _Optional[int] = ...,
+        username: _Optional[str] = ...,
+        profile_picture: _Optional[str] = ...,
+        name: _Optional[str] = ...,
+        surname: _Optional[str] = ...,
+        age: _Optional[int] = ...,
+        email: _Optional[str] = ...,
+    ) -> None: ...
 
 class GetUserRequest(_message.Message):
     __slots__ = ("username",)
@@ -103,7 +134,14 @@ class UpdateProfileRequest(_message.Message):
     surname: str
     email: str
     user_id: int
-    def __init__(self, username: _Optional[str] = ..., name: _Optional[str] = ..., surname: _Optional[str] = ..., email: _Optional[str] = ..., user_id: _Optional[int] = ...) -> None: ...
+    def __init__(
+        self,
+        username: _Optional[str] = ...,
+        name: _Optional[str] = ...,
+        surname: _Optional[str] = ...,
+        email: _Optional[str] = ...,
+        user_id: _Optional[int] = ...,
+    ) -> None: ...
 
 class UpdateProfilePictureResponse(_message.Message):
     __slots__ = ("profile_picture",)
@@ -117,4 +155,6 @@ class UpdateProfilePictureRequest(_message.Message):
     USER_ID_FIELD_NUMBER: _ClassVar[int]
     profile_picture: bytes
     user_id: int
-    def __init__(self, profile_picture: _Optional[bytes] = ..., user_id: _Optional[int] = ...) -> None: ...
+    def __init__(
+        self, profile_picture: _Optional[bytes] = ..., user_id: _Optional[int] = ...
+    ) -> None: ...

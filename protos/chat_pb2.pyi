@@ -1,7 +1,13 @@
 from google.protobuf.internal import containers as _containers
 from google.protobuf import descriptor as _descriptor
 from google.protobuf import message as _message
-from typing import ClassVar as _ClassVar, Iterable as _Iterable, Mapping as _Mapping, Optional as _Optional, Union as _Union
+from typing import (
+    ClassVar as _ClassVar,
+    Iterable as _Iterable,
+    Mapping as _Mapping,
+    Optional as _Optional,
+    Union as _Union,
+)
 
 DESCRIPTOR: _descriptor.FileDescriptor
 
@@ -17,7 +23,14 @@ class Chat(_message.Message):
     chat_member_id: int
     chat_author: ChatUser
     chat_member: ChatUser
-    def __init__(self, id: _Optional[int] = ..., chat_author_id: _Optional[int] = ..., chat_member_id: _Optional[int] = ..., chat_author: _Optional[_Union[ChatUser, _Mapping]] = ..., chat_member: _Optional[_Union[ChatUser, _Mapping]] = ...) -> None: ...
+    def __init__(
+        self,
+        id: _Optional[int] = ...,
+        chat_author_id: _Optional[int] = ...,
+        chat_member_id: _Optional[int] = ...,
+        chat_author: _Optional[_Union[ChatUser, _Mapping]] = ...,
+        chat_member: _Optional[_Union[ChatUser, _Mapping]] = ...,
+    ) -> None: ...
 
 class CreateChatRequest(_message.Message):
     __slots__ = ("member_id", "author_id")
@@ -25,7 +38,9 @@ class CreateChatRequest(_message.Message):
     AUTHOR_ID_FIELD_NUMBER: _ClassVar[int]
     member_id: int
     author_id: int
-    def __init__(self, member_id: _Optional[int] = ..., author_id: _Optional[int] = ...) -> None: ...
+    def __init__(
+        self, member_id: _Optional[int] = ..., author_id: _Optional[int] = ...
+    ) -> None: ...
 
 class ChatUser(_message.Message):
     __slots__ = ("id", "username", "profile_picture", "name", "surname", "age", "email")
@@ -43,7 +58,16 @@ class ChatUser(_message.Message):
     surname: str
     age: int
     email: str
-    def __init__(self, id: _Optional[int] = ..., username: _Optional[str] = ..., profile_picture: _Optional[str] = ..., name: _Optional[str] = ..., surname: _Optional[str] = ..., age: _Optional[int] = ..., email: _Optional[str] = ...) -> None: ...
+    def __init__(
+        self,
+        id: _Optional[int] = ...,
+        username: _Optional[str] = ...,
+        profile_picture: _Optional[str] = ...,
+        name: _Optional[str] = ...,
+        surname: _Optional[str] = ...,
+        age: _Optional[int] = ...,
+        email: _Optional[str] = ...,
+    ) -> None: ...
 
 class CreateChatResponse(_message.Message):
     __slots__ = ("chat",)
@@ -55,7 +79,9 @@ class GetUserChatsResponse(_message.Message):
     __slots__ = ("chat",)
     CHAT_FIELD_NUMBER: _ClassVar[int]
     chat: _containers.RepeatedCompositeFieldContainer[Chat]
-    def __init__(self, chat: _Optional[_Iterable[_Union[Chat, _Mapping]]] = ...) -> None: ...
+    def __init__(
+        self, chat: _Optional[_Iterable[_Union[Chat, _Mapping]]] = ...
+    ) -> None: ...
 
 class GetUserChatsRequest(_message.Message):
     __slots__ = ("author_id",)
@@ -75,7 +101,9 @@ class GetUserChatRequest(_message.Message):
     ID_FIELD_NUMBER: _ClassVar[int]
     author_id: int
     id: int
-    def __init__(self, author_id: _Optional[int] = ..., id: _Optional[int] = ...) -> None: ...
+    def __init__(
+        self, author_id: _Optional[int] = ..., id: _Optional[int] = ...
+    ) -> None: ...
 
 class DeleteChatRequest(_message.Message):
     __slots__ = ("id", "author_id")
@@ -83,7 +111,9 @@ class DeleteChatRequest(_message.Message):
     AUTHOR_ID_FIELD_NUMBER: _ClassVar[int]
     id: int
     author_id: int
-    def __init__(self, id: _Optional[int] = ..., author_id: _Optional[int] = ...) -> None: ...
+    def __init__(
+        self, id: _Optional[int] = ..., author_id: _Optional[int] = ...
+    ) -> None: ...
 
 class DeleteChatResponse(_message.Message):
     __slots__ = ("message",)

@@ -88,7 +88,7 @@ async def update_profile_picture(
     current_user: Annotated[SUser, Depends(get_current_user)],
     profile_picture: UploadFile = File(...),
 ):
-    
+
     file_content = await profile_picture.read()
 
     response = await client.UpdateProfilePicture(

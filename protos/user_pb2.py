@@ -9,13 +9,9 @@ from google.protobuf import descriptor_pool as _descriptor_pool
 from google.protobuf import runtime_version as _runtime_version
 from google.protobuf import symbol_database as _symbol_database
 from google.protobuf.internal import builder as _builder
+
 _runtime_version.ValidateProtobufRuntimeVersion(
-    _runtime_version.Domain.PUBLIC,
-    5,
-    28,
-    1,
-    '',
-    'protos/user.proto'
+    _runtime_version.Domain.PUBLIC, 5, 28, 1, "", "protos/user.proto"
 )
 # @@protoc_insertion_point(imports)
 
@@ -25,37 +21,39 @@ _sym_db = _symbol_database.Default()
 from google.protobuf import empty_pb2 as google_dot_protobuf_dot_empty__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x11protos/user.proto\x12\x04user\x1a\x1bgoogle/protobuf/empty.proto\"x\n\x04User\x12\n\n\x02id\x18\x01 \x01(\x04\x12\x10\n\x08username\x18\x02 \x01(\t\x12\x17\n\x0fprofile_picture\x18\x03 \x01(\t\x12\x0c\n\x04name\x18\x05 \x01(\t\x12\x0f\n\x07surname\x18\x06 \x01(\t\x12\x0b\n\x03\x61ge\x18\x07 \x01(\x04\x12\r\n\x05\x65mail\x18\x08 \x01(\t\"T\n\x11\x43reateUserRequest\x12\x10\n\x08username\x18\x01 \x01(\t\x12\x10\n\x08password\x18\x02 \x01(\t\x12\x0c\n\x04name\x18\x03 \x01(\t\x12\r\n\x05\x65mail\x18\x04 \x01(\t\".\n\x12\x43reateUserResponse\x12\x18\n\x04user\x18\x01 \x01(\x0b\x32\n.user.User\"F\n GetUserByUsernamePasswordRequest\x12\x10\n\x08username\x18\x01 \x01(\t\x12\x10\n\x08password\x18\x02 \x01(\t\"=\n!GetUserByUsernamePasswordResponse\x12\x18\n\x04user\x18\x01 \x01(\x0b\x32\n.user.User\"\x83\x01\n\x0fGetUserResponse\x12\n\n\x02id\x18\x01 \x01(\x04\x12\x10\n\x08username\x18\x02 \x01(\t\x12\x17\n\x0fprofile_picture\x18\x03 \x01(\t\x12\x0c\n\x04name\x18\x05 \x01(\t\x12\x0f\n\x07surname\x18\x06 \x01(\t\x12\x0b\n\x03\x61ge\x18\x07 \x01(\x04\x12\r\n\x05\x65mail\x18\x08 \x01(\t\"\"\n\x0eGetUserRequest\x12\x10\n\x08username\x18\x01 \x01(\t\" \n\x12GetUserByIdRequest\x12\n\n\x02id\x18\x01 \x01(\x04\"/\n\x13GetUserByIdResponse\x12\x18\n\x04user\x18\x01 \x01(\x0b\x32\n.user.User\"g\n\x14UpdateProfileRequest\x12\x10\n\x08username\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x0f\n\x07surname\x18\x03 \x01(\t\x12\r\n\x05\x65mail\x18\x04 \x01(\t\x12\x0f\n\x07user_id\x18\x05 \x01(\x04\"7\n\x1cUpdateProfilePictureResponse\x12\x17\n\x0fprofile_picture\x18\x01 \x01(\t\"G\n\x1bUpdateProfilePictureRequest\x12\x17\n\x0fprofile_picture\x18\x01 \x01(\x0c\x12\x0f\n\x07user_id\x18\x02 \x01(\x04\x32\xdc\x03\n\x0bUserService\x12?\n\nCreateUser\x12\x17.user.CreateUserRequest\x1a\x18.user.CreateUserResponse\x12l\n\x19GetUserByUsernamePassword\x12&.user.GetUserByUsernamePasswordRequest\x1a\'.user.GetUserByUsernamePasswordResponse\x12\x36\n\x07GetUser\x12\x14.user.GetUserRequest\x1a\x15.user.GetUserResponse\x12\x42\n\x0bGetUserByID\x12\x18.user.GetUserByIdRequest\x1a\x19.user.GetUserByIdResponse\x12\x43\n\rUpdateProfile\x12\x1a.user.UpdateProfileRequest\x1a\x16.google.protobuf.Empty\x12]\n\x14UpdateProfilePicture\x12!.user.UpdateProfilePictureRequest\x1a\".user.UpdateProfilePictureResponseb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(
+    b'\n\x11protos/user.proto\x12\x04user\x1a\x1bgoogle/protobuf/empty.proto"x\n\x04User\x12\n\n\x02id\x18\x01 \x01(\x04\x12\x10\n\x08username\x18\x02 \x01(\t\x12\x17\n\x0fprofile_picture\x18\x03 \x01(\t\x12\x0c\n\x04name\x18\x05 \x01(\t\x12\x0f\n\x07surname\x18\x06 \x01(\t\x12\x0b\n\x03\x61ge\x18\x07 \x01(\x04\x12\r\n\x05\x65mail\x18\x08 \x01(\t"T\n\x11\x43reateUserRequest\x12\x10\n\x08username\x18\x01 \x01(\t\x12\x10\n\x08password\x18\x02 \x01(\t\x12\x0c\n\x04name\x18\x03 \x01(\t\x12\r\n\x05\x65mail\x18\x04 \x01(\t".\n\x12\x43reateUserResponse\x12\x18\n\x04user\x18\x01 \x01(\x0b\x32\n.user.User"F\n GetUserByUsernamePasswordRequest\x12\x10\n\x08username\x18\x01 \x01(\t\x12\x10\n\x08password\x18\x02 \x01(\t"=\n!GetUserByUsernamePasswordResponse\x12\x18\n\x04user\x18\x01 \x01(\x0b\x32\n.user.User"\x83\x01\n\x0fGetUserResponse\x12\n\n\x02id\x18\x01 \x01(\x04\x12\x10\n\x08username\x18\x02 \x01(\t\x12\x17\n\x0fprofile_picture\x18\x03 \x01(\t\x12\x0c\n\x04name\x18\x05 \x01(\t\x12\x0f\n\x07surname\x18\x06 \x01(\t\x12\x0b\n\x03\x61ge\x18\x07 \x01(\x04\x12\r\n\x05\x65mail\x18\x08 \x01(\t""\n\x0eGetUserRequest\x12\x10\n\x08username\x18\x01 \x01(\t" \n\x12GetUserByIdRequest\x12\n\n\x02id\x18\x01 \x01(\x04"/\n\x13GetUserByIdResponse\x12\x18\n\x04user\x18\x01 \x01(\x0b\x32\n.user.User"g\n\x14UpdateProfileRequest\x12\x10\n\x08username\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x0f\n\x07surname\x18\x03 \x01(\t\x12\r\n\x05\x65mail\x18\x04 \x01(\t\x12\x0f\n\x07user_id\x18\x05 \x01(\x04"7\n\x1cUpdateProfilePictureResponse\x12\x17\n\x0fprofile_picture\x18\x01 \x01(\t"G\n\x1bUpdateProfilePictureRequest\x12\x17\n\x0fprofile_picture\x18\x01 \x01(\x0c\x12\x0f\n\x07user_id\x18\x02 \x01(\x04\x32\xdc\x03\n\x0bUserService\x12?\n\nCreateUser\x12\x17.user.CreateUserRequest\x1a\x18.user.CreateUserResponse\x12l\n\x19GetUserByUsernamePassword\x12&.user.GetUserByUsernamePasswordRequest\x1a\'.user.GetUserByUsernamePasswordResponse\x12\x36\n\x07GetUser\x12\x14.user.GetUserRequest\x1a\x15.user.GetUserResponse\x12\x42\n\x0bGetUserByID\x12\x18.user.GetUserByIdRequest\x1a\x19.user.GetUserByIdResponse\x12\x43\n\rUpdateProfile\x12\x1a.user.UpdateProfileRequest\x1a\x16.google.protobuf.Empty\x12]\n\x14UpdateProfilePicture\x12!.user.UpdateProfilePictureRequest\x1a".user.UpdateProfilePictureResponseb\x06proto3'
+)
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
-_builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'protos.user_pb2', _globals)
+_builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, "protos.user_pb2", _globals)
 if not _descriptor._USE_C_DESCRIPTORS:
-  DESCRIPTOR._loaded_options = None
-  _globals['_USER']._serialized_start=56
-  _globals['_USER']._serialized_end=176
-  _globals['_CREATEUSERREQUEST']._serialized_start=178
-  _globals['_CREATEUSERREQUEST']._serialized_end=262
-  _globals['_CREATEUSERRESPONSE']._serialized_start=264
-  _globals['_CREATEUSERRESPONSE']._serialized_end=310
-  _globals['_GETUSERBYUSERNAMEPASSWORDREQUEST']._serialized_start=312
-  _globals['_GETUSERBYUSERNAMEPASSWORDREQUEST']._serialized_end=382
-  _globals['_GETUSERBYUSERNAMEPASSWORDRESPONSE']._serialized_start=384
-  _globals['_GETUSERBYUSERNAMEPASSWORDRESPONSE']._serialized_end=445
-  _globals['_GETUSERRESPONSE']._serialized_start=448
-  _globals['_GETUSERRESPONSE']._serialized_end=579
-  _globals['_GETUSERREQUEST']._serialized_start=581
-  _globals['_GETUSERREQUEST']._serialized_end=615
-  _globals['_GETUSERBYIDREQUEST']._serialized_start=617
-  _globals['_GETUSERBYIDREQUEST']._serialized_end=649
-  _globals['_GETUSERBYIDRESPONSE']._serialized_start=651
-  _globals['_GETUSERBYIDRESPONSE']._serialized_end=698
-  _globals['_UPDATEPROFILEREQUEST']._serialized_start=700
-  _globals['_UPDATEPROFILEREQUEST']._serialized_end=803
-  _globals['_UPDATEPROFILEPICTURERESPONSE']._serialized_start=805
-  _globals['_UPDATEPROFILEPICTURERESPONSE']._serialized_end=860
-  _globals['_UPDATEPROFILEPICTUREREQUEST']._serialized_start=862
-  _globals['_UPDATEPROFILEPICTUREREQUEST']._serialized_end=933
-  _globals['_USERSERVICE']._serialized_start=936
-  _globals['_USERSERVICE']._serialized_end=1412
+    DESCRIPTOR._loaded_options = None
+    _globals["_USER"]._serialized_start = 56
+    _globals["_USER"]._serialized_end = 176
+    _globals["_CREATEUSERREQUEST"]._serialized_start = 178
+    _globals["_CREATEUSERREQUEST"]._serialized_end = 262
+    _globals["_CREATEUSERRESPONSE"]._serialized_start = 264
+    _globals["_CREATEUSERRESPONSE"]._serialized_end = 310
+    _globals["_GETUSERBYUSERNAMEPASSWORDREQUEST"]._serialized_start = 312
+    _globals["_GETUSERBYUSERNAMEPASSWORDREQUEST"]._serialized_end = 382
+    _globals["_GETUSERBYUSERNAMEPASSWORDRESPONSE"]._serialized_start = 384
+    _globals["_GETUSERBYUSERNAMEPASSWORDRESPONSE"]._serialized_end = 445
+    _globals["_GETUSERRESPONSE"]._serialized_start = 448
+    _globals["_GETUSERRESPONSE"]._serialized_end = 579
+    _globals["_GETUSERREQUEST"]._serialized_start = 581
+    _globals["_GETUSERREQUEST"]._serialized_end = 615
+    _globals["_GETUSERBYIDREQUEST"]._serialized_start = 617
+    _globals["_GETUSERBYIDREQUEST"]._serialized_end = 649
+    _globals["_GETUSERBYIDRESPONSE"]._serialized_start = 651
+    _globals["_GETUSERBYIDRESPONSE"]._serialized_end = 698
+    _globals["_UPDATEPROFILEREQUEST"]._serialized_start = 700
+    _globals["_UPDATEPROFILEREQUEST"]._serialized_end = 803
+    _globals["_UPDATEPROFILEPICTURERESPONSE"]._serialized_start = 805
+    _globals["_UPDATEPROFILEPICTURERESPONSE"]._serialized_end = 860
+    _globals["_UPDATEPROFILEPICTUREREQUEST"]._serialized_start = 862
+    _globals["_UPDATEPROFILEPICTUREREQUEST"]._serialized_end = 933
+    _globals["_USERSERVICE"]._serialized_start = 936
+    _globals["_USERSERVICE"]._serialized_end = 1412
 # @@protoc_insertion_point(module_scope)

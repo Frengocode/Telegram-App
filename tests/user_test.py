@@ -5,7 +5,6 @@ import pytest
 import httpx
 
 
-
 BASE_URL = "http://localhost:8000"
 
 
@@ -61,18 +60,15 @@ async def test_update_user_profile():
     token = await get_auth_token()
     headers = {"Authorization": f"Bearer {token}"}
 
-
-    data = {
-        "username": "ali",
-        "name": "string",
-        "email": "string",
-        "surname": "string"
-    }
+    data = {"username": "ali", "name": "string", "email": "string", "surname": "string"}
 
     async with httpx.AsyncClient() as client:
-        response = await client.patch(f"{BASE_URL}/user-service/api/v1/update-user-profile/", json=data, headers=headers)
+        response = await client.patch(
+            f"{BASE_URL}/user-service/api/v1/update-user-profile/",
+            json=data,
+            headers=headers,
+        )
         assert response.status_code == status.HTTP_200_OK
-
 
 
 @pytest.mark.asyncio
@@ -81,7 +77,6 @@ async def test_update_profile_picture():
     token = await get_auth_token()
     headers = {"Authorization": f"Bearer {token}"}
 
-
     current_dir = Path(__file__).parent
     picture_path = current_dir / "test.jpg"
 
@@ -89,7 +84,9 @@ async def test_update_profile_picture():
 
     async with httpx.AsyncClient() as client:
         response = await client.patch(
-            f"{BASE_URL}/user-service/api/v1/update-profile-picture/", files=files, headers=headers
+            f"{BASE_URL}/user-service/api/v1/update-profile-picture/",
+            files=files,
+            headers=headers,
         )
 
         assert response.status_code == status.HTTP_200_OK

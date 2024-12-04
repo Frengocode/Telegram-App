@@ -255,8 +255,7 @@ class UserService(user_pb2_grpc.UserServiceServicer):
         if cached_data:
             return json.loads(cached_data)
         return None
-    
-    
+
     async def UpdateProfilePicture(self, request, context):
 
         user = (
@@ -272,17 +271,17 @@ class UserService(user_pb2_grpc.UserServiceServicer):
         if not user:
             log.info("User Not Found")
             return Empty()
-        
-        exist_user_profile_picture = os.path.join(MEDIA_ROOT, user.picture_url)
-        if exist_user_profile_picture:
-            os.remove(exist_user_profile_picture)
+        if user.picture_url is not None:
+            exist_user_profile_picture = os.path.join(MEDIA_ROOT, user.picture_url)
+            if exist_user_profile_picture:
+                os.remove(exist_user_profile_picture)
 
         if request.profile_picture:
             file_name = f"{uuid.uuid4()}.jpg"
             file_path = os.path.join(MEDIA_ROOT, file_name)
 
             async with aiofiles.open(file_path, "wb") as out_file:
-                await out_file.write(request.profile_picture)  
+                await out_file.write(request.profile_picture)
 
             log.info(f"Picture {file_name} saved at {file_path}")
 
@@ -290,13 +289,11 @@ class UserService(user_pb2_grpc.UserServiceServicer):
 
             await self.session.commit()
 
-            return user_pb2.UpdateProfilePictureResponse(
-                profile_picture=file_name
-            )
+            return user_pb2.UpdateProfilePictureResponse(profile_picture=file_name)
 
         log.info("No profile picture provided")
         return Empty()
-    
+
 
 async def run(addr="localhost:50051"):
     server = aio.server()

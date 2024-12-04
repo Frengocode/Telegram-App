@@ -10,7 +10,9 @@ class Auth(_message.Message):
     TOKEN_TYPE_FIELD_NUMBER: _ClassVar[int]
     access_token: str
     token_type: str
-    def __init__(self, access_token: _Optional[str] = ..., token_type: _Optional[str] = ...) -> None: ...
+    def __init__(
+        self, access_token: _Optional[str] = ..., token_type: _Optional[str] = ...
+    ) -> None: ...
 
 class LoginRequest(_message.Message):
     __slots__ = ("username", "password")
@@ -18,7 +20,9 @@ class LoginRequest(_message.Message):
     PASSWORD_FIELD_NUMBER: _ClassVar[int]
     username: str
     password: str
-    def __init__(self, username: _Optional[str] = ..., password: _Optional[str] = ...) -> None: ...
+    def __init__(
+        self, username: _Optional[str] = ..., password: _Optional[str] = ...
+    ) -> None: ...
 
 class LoginResponse(_message.Message):
     __slots__ = ("access_token", "token_type")
@@ -26,4 +30,6 @@ class LoginResponse(_message.Message):
     TOKEN_TYPE_FIELD_NUMBER: _ClassVar[int]
     access_token: str
     token_type: str
-    def __init__(self, access_token: _Optional[str] = ..., token_type: _Optional[str] = ...) -> None: ...
+    def __init__(
+        self, access_token: _Optional[str] = ..., token_type: _Optional[str] = ...
+    ) -> None: ...
