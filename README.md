@@ -54,12 +54,38 @@ To run the project, you need to have the following installed:
    ```bash
     python -m venv venv
 
-3.Activate the virtual environment: 
-  ```bash
-  For Windows .\venv\Scripts\activate  For Linux/macOS  source venv/bin/activate
+3. Activate the virtual environment:
+   ```bash
+   For Windows .\venv\Scripts\activate
+   For Liniux/MacOS source venv/bin/activate
 
-```bash
-4.Install the required dependencies:
+4. Install the required dependencies:
+   ```bash
+    python -m venv venv
+
+5. Configure the application by editing the core/config.py file. Make sure to provide the correct values for PostgreSQL and Redis connections.
+
+6. Create the necessary databases for the services. Database files are located in the database/ folder.
+
+7. 🔧 Running the tests <a name = "tests"></a>
+You can run the unit tests to verify that everything is working correctly. The tests ensure that the application functions as expected.
+Example of running tests:
+    ```bash
+      python -m pytest tests/
+
+
+9. ⛏️ Built Using <a name = "built_using"></a>
+FastAPI - Web Framework
+PostgreSQL - Database
+Redis - Caching and messaging system
+✍️ Authors <a name = "authors"></a>
+@Frengocode - Idea & Initial work
+See also the list of contributors who participated in this project.
+
+10.🎉 Acknowledgements <a name = "acknowledgement"></a>
+Hat tip to anyone whose code was used
+Inspiration: Telegram, FastAPI, Redis, PostgreSQL
+
 
 
 
