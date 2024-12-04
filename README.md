@@ -32,11 +32,11 @@
 
 ## 🧐 About <a name = "about"></a>
 
-This project is designed to provide experience in building scalable applications with Python. The application simulates a Telegram-like messaging platform using Redis and PostgreSQL for managing messages and users. It uses FastAPI for the backend API and aims to help developers learn how to set up web applications with proper configuration and database handling.
+This project is designed to provide expertise in building scalable applications using Python. The app mimics a Telegram-like messaging platform, using Redis and PostgreSQL to manage messages and users. It uses FastAP AND gRPC for the API backend and is designed to help developers learn how to set up web applications with proper database configuration and handling.
 
-## 🏁 Getting Started <a name = "getting_started"></a>
+## 🏁 Getting Started <a name="getting_started"></a>
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See [deployment](#deployment) for notes on how to deploy the project on a live system.
+These instructions will allow you to get a copy of the project that will be run on your local machine for development and testing. See [deployment](#deployment) for notes on whether
 
 ### Prerequisites
 
