@@ -1,0 +1,75 @@
+syntax = "proto3";
+
+package history;
+
+
+message HistoryUser{
+    
+    uint64 id = 1;
+    string username = 2;
+    string profile_picture = 3;
+    string name = 5;
+    string surname = 6;
+    uint64 age = 7;
+    string email = 8;
+
+};
+
+
+message History{
+
+    uint32 id = 1;
+    uint32 user_id = 2;
+    string content = 3;
+    string content_title = 4;
+    HistoryUser user = 5;
+    
+};
+
+message CreateHistoryRequest{
+    bytes content = 1;
+    string content_title = 2;
+    uint32 user_id = 3;
+
+};
+
+message CreateHistoryResponse{
+    History history = 1;
+};
+
+
+message GetHistorysRequest{
+    uint32 user_id = 1;
+};
+
+message GetHistorysResponse{
+    repeated History historys = 1;
+};
+
+message GetHistoryRequest{
+    uint32 id = 1;
+};
+
+message GetHistoryResponse{
+    History history = 1;
+};
+
+
+message DeleteHistoryRequest{
+    uint32 id = 1;
+    uint32 user_id = 2;
+
+};
+
+message DeleteHistoryResponse{
+    string response = 1;
+};
+
+
+service HistoryService{
+    rpc CreateHistory(CreateHistoryRequest) returns (CreateHistoryResponse);
+    rpc GetHystorys(GetHistorysRequest) returns (GetHistorysResponse);
+    rpc GetHistory(GetHistoryRequest) returns (GetHistoryResponse);
+    rpc DeleteHistory(DeleteHistoryRequest) returns(DeleteHistoryResponse);
+};
+

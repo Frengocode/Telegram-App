@@ -76,7 +76,7 @@ class MessgaeService(message_pb2_grpc.MessageServiceServicer):
 
         chat = await self._get_data_from_url(
             f"http://localhost:8000/chat-service/api/v1/get-user-chat/{request.chat_id}/",
-            accses_token=request.token,
+            access_token=request.token,
         )
         if chat is None:
             log.info("Chat Not Found")
@@ -240,9 +240,6 @@ async def message_run(addr="localhost:50054"):
     async with async_session_maker() as session:
         redis_cli = await get_redis_client()
         message_service = MessgaeService(session=session, redis_cli=redis_cli)
-
-    # # async with get_current_user() as cr:
-    # chat_service = ChatService()
 
     message_pb2_grpc.add_MessageServiceServicer_to_server(message_service, server)
     server.add_insecure_port(addr)

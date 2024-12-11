@@ -1,11 +1,11 @@
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, sessionmaker
 from datetime import datetime
-from core.config import PG_HOST, PG_PASSWORD, PG_USERNAME
+from core.config import settings
 from sqlalchemy import Integer, DateTime
 
 
-DATABASE_URL = f"postgresql+asyncpg://{PG_USERNAME}:{PG_PASSWORD}@{PG_HOST}/MessageTDB"
+DATABASE_URL = f"postgresql+asyncpg://{settings.database.username}:{settings.database.password.get_secret_value()}@{settings.database.host}/MessageTDB"
 
 message_engine = create_async_engine(DATABASE_URL)
 

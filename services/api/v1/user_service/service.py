@@ -120,6 +120,7 @@ class UserService(user_pb2_grpc.UserServiceServicer):
                 email=cached_data.get("email"),
                 surname=cached_data.get("surname"),
                 name=cached_data.get("name"),
+                profile_picture=cached_data.get("profilePicture"),
             )
 
         user = (
@@ -165,6 +166,7 @@ class UserService(user_pb2_grpc.UserServiceServicer):
                     email=cached_data.get("user").get("email"),
                     name=cached_data.get("user").get("name"),
                     age=cached_data.get("user").get("age"),
+                    profile_picture=cached_data.get("user").get("profilePicture"),
                 )
             )
 
@@ -271,10 +273,10 @@ class UserService(user_pb2_grpc.UserServiceServicer):
         if not user:
             log.info("User Not Found")
             return Empty()
-        if user.picture_url is not None:
-            exist_user_profile_picture = os.path.join(MEDIA_ROOT, user.picture_url)
-            if exist_user_profile_picture:
-                os.remove(exist_user_profile_picture)
+
+        exist_user_profile_picture = os.path.join(MEDIA_ROOT, user.picture_url)
+        if exist_user_profile_picture:
+            os.remove(exist_user_profile_picture)
 
         if request.profile_picture:
             file_name = f"{uuid.uuid4()}.jpg"
